@@ -42,11 +42,11 @@ urlpatterns = [
 ]
 
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     
-urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += staticfiles_urlpatterns()
     
 admin.site.site_header ='IT-SERVICES'                    # default: "Django Administration"
 admin.site.index_title ="Interface d'administration"                 # default: "Site administration"
@@ -55,5 +55,7 @@ admin.site.site_title = 'IT-SERVICES'  # default: "Django site admin"
 
 
 handler404 = "ecommerce.apps.products.views.handle404"
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
