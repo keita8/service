@@ -54,6 +54,6 @@ admin.site.site_title = 'IT-SERVICES'  # default: "Django site admin"
 
 
 
-handler404 = "core.apps.products.views.handle404"
+handler404 = "ecommerce.apps.products.views.handle404"
 
 urlpatterns += staticfiles_urlpatterns()
