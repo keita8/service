@@ -47,6 +47,23 @@ INSTALLED_APPS = [
     
     
     "ecommerce.apps.account",
+    "ecommerce.apps.products",
+    # "ecommerce.apps.account",
+    # "ecommerce.apps.products",
+    # "ecommerce.apps.contact",
+    # "ecommerce.apps.search",
+    # "ecommerce.apps.cart",
+    # "ecommerce.apps.social",
+    # "ecommerce.apps.shop",
+    # "ecommerce.apps.tags",
+    # "ecommerce.apps.instagram",
+    # "ecommerce.apps.about",
+    # "ecommerce.apps.blog",
+    # "ecommerce.apps.marketing",
+    # "ecommerce.apps.order",
+    # "ecommerce.apps.billing",
+    # "ecommerce.apps.addresses",
+    # "ecommerce.apps.analytics",
 ]
 
 MIDDLEWARE = [
@@ -130,8 +147,107 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
 
+STATIC_URL = "/static/"
+
+STATIC_ROOT = BASE_DIR.parent.parent / "static"
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+)
+
+
+
+
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = BASE_DIR.parent.parent / "media"
+
+
+
+
+
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "320px",
+    "width": "960px",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+    "a11ycheck ltr rtl | showcomments addcomment code",
+    "custom_undo_redo_levels": 10,
+    "language": "fr_FR",  # To force a specific language instead of the Django current language.
+}
+
+
+
+
+
+USE_THOUSAND_SEPARATOR = True 
+
+# AUTH_USER_MODEL = 'accounts.User'
+
+LOGOUT_REDIRECT_URL = "/login/"
+LOGOUT_REDIRECT_URL = "/"  # new
+
+SIMPLE_ENVIRONMENT = config("SIMPLE_ENVIRONMENT", default="local")
+
+
+# MAILCHIMP CREDENTIALS
+MAILCHIMP_API_KEY = "e3a7bc63e4b0cfda697e18ec938a44be-us20"
+MAILCHIMP_DATA_CENTER = "us20"
+MAILCHIMP_EMAIL_LIST_ID = "a9e03c576c"
+
+
+
+# AUTH_USER_MODEL = 'account.User'
+# LOGIN_URL = 'accounts:login'
+# LOGIN_URL_REDIRECT = '/'
+# LOGOUT = 'accounts:logout'
+
+# AUTH_USER_MODEL = "accounts.CustomUser"  # ne
+
+
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_USER_END_SESSION = False
+
+
+
+
+MANAGERS = (
+    ('abdul', 'abdul@gmail.com')
+)
+
+
+
+
+
+
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='localhost')
+EMAIL_USER_TLS = config("EMAIL_USER_TLS", default="")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default='')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default='')
+
+
+
+
+
+ADMINS = MANAGERS
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

@@ -7,8 +7,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     
-    path("admin/", admin.site.urls),
+    path('product/', include('ecommerce.apps.products.urls', namespace='products')),
     path('', include('ecommerce.apps.account.urls', namespace='account')),
+    
+    path("admin/", admin.site.urls),
+    
 ]
 
 
