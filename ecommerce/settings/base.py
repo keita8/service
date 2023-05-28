@@ -192,9 +192,9 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 AUTH_USER_MODEL = 'account.User'
-LOGIN_URL = 'accounts:login'
+LOGIN_URL = 'account:login'
 LOGIN_URL_REDIRECT = '/'
-LOGOUT = 'accounts:logout'
+LOGOUT = 'account:logout'
 
 
 USE_THOUSAND_SEPARATOR = True 
