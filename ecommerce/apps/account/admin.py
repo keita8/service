@@ -16,7 +16,7 @@ User = get_user_model()
 admin.site.unregister(Group)
 
 
-
+@admin.register(User)
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserAdminChangeForm
