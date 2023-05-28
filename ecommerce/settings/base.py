@@ -89,7 +89,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "social.context_processors.link",
+                "ecommerce.apps.social.context_processors.link",
             ],
         },
     },
