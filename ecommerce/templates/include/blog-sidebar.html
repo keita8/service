@@ -1,0 +1,39 @@
+{% load static %}
+{% load humanize %}
+
+<div class="col-lg-3">
+    <!-- Start Sidebar Area -->
+    <div class="siderbar-section">
+
+        <!-- Start Single Sidebar Widget -->
+        <div class="sidebar-single-widget">
+            <h6 class="sidebar-title">Chercher</h6>
+            <form action="{% url 'blog:result' %}" method="GET">
+                <div class="default-search-style d-flex">
+                    <input class="default-search-style-input-box" type="search" name="query" placeholder="Cherchez un article..." required>
+                    <button class="default-search-style-input-btn" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div> <!-- End Single Sidebar Widget -->
+
+        <!-- Start Single Sidebar Widget -->
+        <div class="sidebar-single-widget">
+            <h6 class="sidebar-title">CATEGORIE{{queryset|pluralize}} </h6>
+            <div class="sidebar-content">
+                <ul class="sidebar-menu">
+                    {% for cat in queryset %}
+                        
+                    <li><a {% if cat.id == request.path %} style="color:#b19361;" {% endif %} href="{% url 'blog:post_by_categorie' cat.id %}">
+                        {{ cat.title|safe|capfirst }}
+                    </a></li>
+
+                    {% endfor %}
+
+
+                </ul>
+            </div>
+        </div> <!-- End Single Sidebar Widget -->
+
+
+    </div> <!-- End Sidebar Area -->
+</div>

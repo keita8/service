@@ -1,0 +1,32 @@
+<!--login area start-->
+<div class="col-lg-6 col-md-12" style="margin-block: 70px;">
+    <div class="account_form" data-aos="fade-up" data-aos-delay="0">
+        <h3>Se connecter</h3>
+        <form action="{% if action_url %} {{ action_url }}  {% else %} {% url 'accounts:login' %} {% endif %}" method="POST">
+            {% csrf_token %}
+            {% if next_url %}
+                
+            <input type="hidden" name="next" value="{{ next_url }}"/>
+
+            {% endif %}
+
+            <div class="default-form-box">
+                <label>{{ form.username.label }} <span>*</span></label>
+                {{ form.username }}
+            </div>
+            <div class="default-form-box">
+                <label>{{ form.password.label }} <span>*</span></label>
+                {{ form.password }}
+            </div>
+            <div class="login_submit">
+                <button class="btn btn-md btn-black-default-hover mb-4" type="submit">login</button>
+                <label class="checkbox-default mb-4" for="offer">
+                    <input type="checkbox" id="offer">
+                    <span>Remember me</span>
+                </label>
+                <a href="{% url 'account:register' %}">S'inscrire?</a>
+            </div>
+        </form>
+    </div>
+</div>
+<!--login area start-->

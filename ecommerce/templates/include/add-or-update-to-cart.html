@@ -1,0 +1,40 @@
+
+
+<form class="form-product-ajax" action="{% url 'cart:update'  %}" data-endpoint="{% url 'cart:update' %}"  method="POST">
+
+    {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{product.id}}">
+
+    {% if in_cart %}
+    
+        <td class="product_remove">
+            <button type="submit" value="{{product.id}}">
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </td>
+
+    {% else %} 
+
+        <div class="d-flex align-items-center submit-span">
+
+                            
+            {% if product in cart.products.all %}
+
+                <div class="product-add-to-cart-btn">
+                    <button type="submit" class="btn btn-block  btn-lg btn-black-default-hover">Retirer</button>
+                </div>
+
+            {% else %}
+
+                <div class="product-add-to-cart-btn">
+                    <button type="submit"  class="btn btn-block  btn-lg btn-black-default-hover" >Ajouter</button>
+                </div>
+
+            {% endif %} 
+
+
+        </div>
+
+    
+   {% endif %} 
+</form>

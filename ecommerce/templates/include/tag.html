@@ -1,0 +1,10 @@
+<div class="sidebar-single-widget">
+    <h6 class="sidebar-title">Tag</h6>
+    <div class="sidebar-content">
+        <div class="tag-link">
+            {% for tag in tags %}
+            <a href="#">{{ tag.title|safe|capfirst}} </a>
+            {% endfor %}
+        </div>
+    </div>
+</div> <!-- End Single Sidebar Widget -->

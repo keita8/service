@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}| 404{% endblock title %}
+
+{% block content %}
+
+
+
+
+
+    <!-- ...:::: Start Error Section :::... -->
+    <div class="error-section" style="margin-block: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="error-form">
+                    <h1 class="big-title" data-aos="fade-up" data-aos-delay="0">404</h1>
+                    <h4 class="sub-title" data-aos="fade-up" data-aos-delay="200">Opps! PAGE NON TROUVÉE</h4>
+                    <p data-aos="fade-up" data-aos-delay="400">Desolé mais la page que vous cherchez soit n'existe pas,
+                        a été modifiée, <br>supprimée, ou temporairement indisponible.</p>
+                    <div class="row">
+
+                        <div class="col-10 offset-1 col-md-4 offset-md-4">
+                            <form action="{% url 'search:query' %}">
+
+                                    <div class="default-search-style d-flex" data-aos="fade-up" data-aos-delay="600">
+                                            <button class="default-search-style-input-btn" type="submit"><i class="fa fa-search"></i></button>
+
+                                            <input class="default-search-style-input-box" type="text" name="q" placeholder="Cherchez un article..." required>
+                                    </div>
+                             </form>
+
+                            <a href="/" class="btn btn-md btn-black-default-hover mt-7" data-aos="fade-up"
+                                data-aos-delay="800">Retour à la page d'accueil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- ...:::: End Error Section :::... -->
+
+
+{% endblock content %}

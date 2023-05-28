@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
+    'django.contrib.humanize',
     
     
     
@@ -189,6 +189,12 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 
+
+
+AUTH_USER_MODEL = 'account.User'
+LOGIN_URL = 'accounts:login'
+LOGIN_URL_REDIRECT = '/'
+LOGOUT = 'accounts:logout'
 
 
 USE_THOUSAND_SEPARATOR = True 

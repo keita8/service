@@ -1,0 +1,396 @@
+{% load static %}
+{% load humanize %}
+{% url 'search' as search %}
+{% url 'products:categorie' as categorie %}
+
+
+
+    <!-- Start Header Area -->
+    <header class="header-section d-none d-xl-block">
+        <div class="header-wrapper">
+            <div class="header-bottom header-bottom-color--golden section-fluid sticky-header sticky-color--golden">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-center justify-content-between">
+                            <!-- Start Header Logo -->
+                            <div class="header-logo">
+                                <div class="logo">
+                                    <a href="/">
+                                        IT-SERVICE
+                                        <!-- <img src="{% static 'assets/images/logo/logo_black.png' %}" alt=""> -->
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- End Header Logo -->
+
+                            <!-- Start Header Main Menu -->
+                            <div class="main-menu menu-color--black menu-hover-color--golden">
+                                <nav>
+                                    <ul>
+                                        <li class="has-dropdown">
+                                            <a {% if request.path == '/' %} class="active main-menu-link" style="color:#B19361;" {% endif %} href="/">Accueil</a>
+                                            
+                                        </li>
+                                        <li class="has-dropdown has-megaitem">
+                                            <a class="active main-menu-link" style="color:#B19361;" href="#">Boutique </a>
+                                        </li>
+                                        <li class="has-dropdown">
+                                            <a class="active main-menu-link" style="color:#B19361;"  href="#">Blog</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a  class="active main-menu-link" style="color:#B19361;"  href="#">A propos</a>
+                                        </li>
+                                        <li>
+                                            <a  class="active main-menu-link" style="color:#B19361;"  href="#">Contact</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- End Header Main Menu Start -->
+
+                            <!-- Start Header Action Link -->
+                            <ul class="header-action-link action-color--black action-hover-color--golden">
+                                <li>
+                                    <a href="#search">
+                                        <i class="icon-magnifier"></i>
+                                    </a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="">
+                                        <ion-icon name="log-out-outline"></ion-icon>
+
+                                        {% comment %} <span class="item-count">3</span> {% endcomment %}
+                                    </a>
+                                </li>
+                                {% else %}
+                                    <li>
+                                        <a href="" >
+                                            <ion-icon name="person-outline"></ion-icon>
+                                            {% comment %} <span class="item-count">3</span> {% endcomment %}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li>
+                                    <!-- <a href="#offcanvas-add-cart" class="offcanvas-toggle"> -->
+                                    <a href="">
+                                        <i class="icon-bag"></i>
+                                        
+                                        <span class="item-count navbar-cart-count">
+                                            {% if request.session.cart_items %}
+                                            {{ request.session.cart_items }}                                      
+                                            {% else %}
+                                                0
+                                            {% endif %} 
+                                        </span>
+                                    </a>
+                                </li>
+
+                                
+                            </ul>
+                            <!-- End Header Action Link -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Start Header Area -->
+
+    <!-- Start Mobile Header -->
+    <div class="mobile-header mobile-header-bg-color--golden section-fluid d-lg-block d-xl-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                    <!-- Start Mobile Left Side -->
+                    <div class="mobile-header-left">
+                        <ul class="mobile-menu-logo">
+                            <li>
+                                <a href="/">
+                                    <div class="logo">
+                                        <img src="{% static 'assets/images/logo/logo_black.png' %}" alt="logo" loading="lazy">
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Mobile Left Side -->
+
+                    <!-- Start Mobile Right Side -->
+                    <div class="mobile-right-side">
+                        <ul class="header-action-link action-color--black action-hover-color--golden">
+                            <li>
+                                <a href="#search">
+                                    <i class="icon-magnifier"></i>
+                                </a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="">
+                                        <ion-icon name="log-out-outline"></ion-icon>
+
+                                        {% comment %} <span class="item-count">3</span> {% endcomment %}
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="" >
+                                        <ion-icon name="person-outline"></ion-icon>
+                                        {% comment %} <span class="item-count">3</span> {% endcomment %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            
+                            <li>
+                                <a href="" id="basket-qty">
+                                    <i class="icon-bag"></i>
+                                    <span class="item-count navbar-cart-count">
+                                        {% if request.session.cart_items %}
+                                            {{ request.session.cart_items }}                                      
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#mobile-menu-offcanvas" class="offcanvas-toggle offside-menu">
+                                    <i class="icon-menu"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Mobile Right Side -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Mobile Header -->
+
+    <!--  Start Offcanvas Mobile Menu Section -->
+    <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-rightside offcanvas-mobile-menu-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        </div> <!-- End Offcanvas Header -->
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <div class="offcanvas-mobile-menu-wrapper">
+            <!-- Start Mobile Menu  -->
+            <div class="mobile-menu-bottom">
+                <!-- Start Mobile Menu Nav -->
+                <div class="offcanvas-menu">
+                    <ul>
+                        <li>
+                            <a {% if request.path == '/' %} class="active main-menu-link" style="color:#B19361;" {% endif %} href="/"><span>Accueil</span></a>
+                        </li>
+                        <li>
+                            <a  class="active main-menu-link" style="color:#B19361;" ><span>Boutique</span></a>
+                        </li>
+                        <li>
+                            <a  class="active main-menu-link" style="color:#B19361;" ><span>Blog</span></a> 
+                        </li>
+                        
+                        <li>
+                            <a  class="active main-menu-link" style="color:#B19361;" >A propos</a>
+                        </li>
+                        <li>
+                            <a  class="active main-menu-link" style="color:#B19361;" >Contact</a>
+                        </li>
+                    </ul>
+                </div> <!-- End Mobile Menu Nav -->
+            </div> <!-- End Mobile Menu -->
+
+            <!-- Start Mobile contact Info -->
+            <div class="mobile-contact-info">
+                <div class="logo">
+                    <a href="/"><img src="{% static 'assets/images/logo/logo_white.png' %}" alt=""></a>
+                </div>
+
+                <address class="address">
+                    <span>{{ links.address|safe|capfirst }}</span>
+                    <span>{{ links.phone_number }}</span>
+                    <span>{{ links.email }}</span>
+                </address>
+
+                <ul class="social-link">
+                    <li><a href="{{ links.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ links.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ links.instagram }}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+
+                <ul class="user-link">
+                    <li><a href="#">Wishlist</a></li>
+                    <li><a  class="active main-menu-link" style="color:#B19361;" >panier</a></li>
+                </ul>
+            </div>
+            <!-- End Mobile contact Info -->
+
+        </div> <!-- End Offcanvas Mobile Menu Wrapper -->
+    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+
+
+    <!-- Start Offcanvas Addcart Section -->
+    <div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        </div> <!-- End Offcanvas Header -->
+
+        <!-- Start  Offcanvas Addcart Wrapper -->
+        <div class="offcanvas-add-cart-wrapper">
+            <h4 class="offcanvas-title">Votre panier</h4>
+            <ul class="offcanvas-cart">
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="#" class="offcanvas-cart-item-image-link">
+                            <img src="{% static 'assets/images/product/default/home-1/default-1.jpg' %}" alt=""
+                                class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">1 x </span>
+                                <span class="offcanvas-cart-item-details-price">$49.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="#" class="offcanvas-cart-item-image-link">
+                            <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
+                                class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="#" class="offcanvas-cart-item-link">Car Vails</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">3 x </span>
+                                <span class="offcanvas-cart-item-details-price">$500.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="#" class="offcanvas-cart-item-image-link">
+                            <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
+                                class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="#" class="offcanvas-cart-item-link">Shock Absorber</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">1 x </span>
+                                <span class="offcanvas-cart-item-details-price">$350.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <div class="offcanvas-cart-total-price">
+                <span class="offcanvas-cart-total-price-text">Subtotal:</span>
+                <span class="offcanvas-cart-total-price-value">$170.00</span>
+            </div>
+            <ul class="offcanvas-cart-action-button">
+                <li><a href="#" class="btn btn-block btn-golden">View Cart</a></li>
+                <li><a href="#" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
+            </ul>
+        </div> <!-- End  Offcanvas Addcart Wrapper -->
+
+    </div> <!-- End  Offcanvas Addcart Section -->
+
+    <!-- Start Offcanvas Mobile Menu Section -->
+    <div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        </div> <!-- ENd Offcanvas Header -->
+
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <div class="offcanvas-wishlist-wrapper">
+            <h4 class="offcanvas-title">Wishlist</h4>
+            <ul class="offcanvas-wishlist">
+                <li class="offcanvas-wishlist-item-single">
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="#" class="offcanvas-wishlist-item-image-link">
+                            <img src="assets/images/product/default/home-1/default-1.jpg" alt=""
+                                class="offcanvas-wishlist-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="#" class="offcanvas-wishlist-item-link">Car Wheel</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
+                                <span class="offcanvas-wishlist-item-details-price">$49.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-wishlist-item-single">
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="#" class="offcanvas-wishlist-item-image-link">
+                            <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
+                                class="offcanvas-wishlist-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="#" class="offcanvas-wishlist-item-link">Car Vails</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-quantity">3 x </span>
+                                <span class="offcanvas-wishlist-item-details-price">$500.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-wishlist-item-single">
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="#" class="offcanvas-wishlist-item-image-link">
+                            <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
+                                class="offcanvas-wishlist-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="#" class="offcanvas-wishlist-item-link">Shock Absorber</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
+                                <span class="offcanvas-wishlist-item-details-price">$350.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="offcanvas-wishlist-action-button">
+                <li><a href="#" class="btn btn-block btn-golden">View wishlist</a></li>
+            </ul>
+        </div> <!-- End Offcanvas Mobile Menu Wrapper -->
+
+    </div> <!-- End Offcanvas Mobile Menu Section -->
+
+    <!-- Start Offcanvas Search Bar Section -->
+    <div id="search" class="search-modal">
+        <button type="button" class="close">×</button>
+        <form action="" method="GET" class="search-form">
+            <input type="search" placeholder="Chercher un article..." name='q' value="{{request.GET.q}}" required/>
+            <button type="submit" class="btn btn-lg btn-golden">Chercher</button>
+        </form>
+    </div>
+    <!-- End Offcanvas Search Bar Section -->
+
+    <!-- Offcanvas Overlay -->
+    <div class="offcanvas-overlay"></div>
+
