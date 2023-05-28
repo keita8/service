@@ -44,26 +44,21 @@ INSTALLED_APPS = [
     
     
     
-    
-    
     "ecommerce.apps.account",
     "ecommerce.apps.products",
-    # "ecommerce.apps.account",
-    # "ecommerce.apps.products",
-    # "ecommerce.apps.contact",
-    # "ecommerce.apps.search",
-    # "ecommerce.apps.cart",
-    # "ecommerce.apps.social",
-    # "ecommerce.apps.shop",
-    # "ecommerce.apps.tags",
-    # "ecommerce.apps.instagram",
-    # "ecommerce.apps.about",
-    # "ecommerce.apps.blog",
-    # "ecommerce.apps.marketing",
-    # "ecommerce.apps.order",
-    # "ecommerce.apps.billing",
-    # "ecommerce.apps.addresses",
-    # "ecommerce.apps.analytics",
+    "ecommerce.apps.contact",
+    "ecommerce.apps.search",
+    "ecommerce.apps.cart",
+    "ecommerce.apps.social",
+    "ecommerce.apps.shop",
+    "ecommerce.apps.instagram",
+    "ecommerce.apps.about",
+    "ecommerce.apps.blog",
+    "ecommerce.apps.marketing",
+    "ecommerce.apps.order",
+    "ecommerce.apps.billing",
+    "ecommerce.apps.addresses",
+    "ecommerce.apps.analytics",
 ]
 
 MIDDLEWARE = [
