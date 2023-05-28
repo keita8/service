@@ -1,0 +1,167 @@
+{% load static %}
+{% load humanize %}        
+        
+        
+        
+        
+        
+        
+        <!-- ...:::: Start Checkout Section:::... -->
+        <div class="checkout-section" style="margin-block: 70px;">
+            <div class="container">
+
+
+                <div class="checkout_form">
+                    <form action="{% if action_url %}{{action_url}}{% else %}{% url 'account:login'  %}{% endif %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 mx-auto">
+
+                                    <h3 style="text-transform: lowercase;">Details de {{address_type}}</h3>
+
+                                    {% if next_url %}
+                                        <input type="hidden" name="next" value="{{next_url}}">
+                                    {% endif %}
+
+
+
+                                    {% if address_type %}
+                                        <input type="hidden" name="address_type" value="{{address_type}}">
+                                    {% endif %}
+
+                                    <div class="row">
+
+                                        {% comment %} {{ address_form.as_p }} {% endcomment %}
+
+                                        <div class="col-lg-6">
+                                            <div class="default-form-box">
+                                                <label>{{ address_form.lastname.label }} <span>*</span></label>
+                                                {{ address_form.lastname }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="default-form-box">
+                                                <label>{{ address_form.firstname.label }} <span>*</span></label>
+                                                {{ address_form.firstname }}
+                                            </div>
+                                        </div>
+
+                                        
+                                        
+                                        <div class="col-12">
+                                            <div class="default-form-box">
+                                                <label>{{address_form.street_address.label}} <span>*</span></label>
+                                                {{address_form.street_address}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="default-form-box">
+                                                <label>{{ address_form.mobile_phone.label}} <span>*</span></label>
+                                                {{ address_form.mobile_phone}} 
+                                            </div>
+                                        </div>
+                                       
+                                        
+                                        <div class="col-12 mt-3">
+                                            <div class="order-notes">
+                                                <label for="order_note">{{address_form.message.label}} </label>
+                                                {{ address_form.message }}
+                                            </div>
+                                        </div> 
+
+                                    </div> 
+
+
+
+                                    <div class="order_button pt-3 mx-auto" style="display:flex; justify-content:center; align-items:center; ">
+                                        <button class="btn btn-md btn-black-default-hover mx-auto" type="submit" style="margin: 0 auto; display:flex; justify-content:center; align-items:center;" value="valider">Valider</button>
+                                    </div>
+                                
+                            </div>
+
+                            <!-- <div class="col-lg-6 col-md-6">
+                            
+                                    <h3 style="text-transform: lowercase;">Votre commande</h3>
+                                    <div class="order_table table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Article</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {% for item in cart.products.all %}
+                                                    
+                                                <tr>
+                                                    <td> {{ item.title|safe|capfirst }} <strong> </strong></td>
+                                                    <td> {{ item.price|floatformat:2|intcomma }} GNF </td>
+                                                </tr>
+
+                                                {% endfor %}
+
+
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                
+                                                <tr class="order_total">
+                                                    <th>Total</th>
+                                                    <td><strong>{{ cart.total|floatformat:2|intcomma}} GNF </strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+
+                                    <div class="payment_method">
+                                        <div class="panel-default">
+                                            <label class="checkbox-default" for="currencyCod" data-bs-toggle="collapse"
+                                                data-bs-target="#methodCod">
+                                                <input type="checkbox" id="currencyCod">
+                                                <span>Cash on Delivery</span>
+                                            </label>
+
+                                            <div id="methodCod" class="collapse" data-parent="#methodCod">
+                                                <div class="card-body1">
+                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State
+                                                        / County, Store Postcode.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-default">
+                                            <label class="checkbox-default" for="currencyPaypal" data-bs-toggle="collapse"
+                                                data-bs-target="#methodPaypal">
+                                                <input type="checkbox" id="currencyPaypal">
+                                                <span>PayPal</span>
+                                            </label>
+                                            <div id="methodPaypal" class="collapse " data-parent="#methodPaypal">
+                                                <div class="card-body1">
+                                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a
+                                                        PayPal account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order_button pt-3">
+                                            <button class="btn btn-md btn-black-default-hover" type="submit">Commander</button>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                             -->
+                             
+                        </div>
+
+
+                    </form>
+
+                </div> 
+            </div>
+        </div>
+
+   
+   
+   
+

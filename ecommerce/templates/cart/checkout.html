@@ -1,0 +1,154 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}| Checkout {% endblock title %}
+{% url 'account:guest_register_url' as guest_register %}
+{% block content %}
+
+{% comment %} {{object.order_id}} -- {{ object.cart}} {% endcomment %}
+
+    {% if not billing_profile %}
+
+
+        {% include 'snippet/form.html' with form=login_form next_url=request.build_absolute_uri %}
+
+        {% url 'account:guest_register' as guest_register_url  %}
+
+        {% include 'snippet/form.html' with form=guest_form next_url=request.build_absolute_uri  action_url=guest_register_url %}
+
+   {% else %} 
+
+        {% if not object.shipping_address and facturation_address_required %}
+
+
+            {% url 'address:shipping' as shipping_address_create  %}
+
+            {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri  action_url=shipping_address_create address_type="livraison" %} 
+
+                <!-- {% if address_qs.exists %}
+                    {% for address in  address_qs %}
+                        
+                        <p>
+                            {{ address.id }}
+                        </p>
+                        <p>
+                            {{ address.street_address }}
+                        </p>
+                    
+                    {% endfor %}
+                {% endif %} -->
+
+
+         
+
+        {% comment %} {% elif not object.billing_address  %}
+
+
+            {% url 'address:shipping' as shipping_address_create  %}
+
+            {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri  action_url=shipping_address_create address_type="facturation" %} {% endcomment %}
+
+
+        {% else %}
+
+                
+        <!-- ...:::: Start Checkout Section:::... -->
+        <div class="checkout-section mx-auto" style="margin-block: 70px;">
+            <div class="container">
+                <div class="checkout_form">
+                    <form action="" method="POST" class="max-auto">
+                        {% csrf_token %}
+
+                        <div class="row mx-auto">
+                            
+
+                            <div class="col-lg-6 col-md-6 mx-auto">
+                            
+                                    <h3 style="text-transform: lowercase;" class="text-center">Votre commande</h3>
+                                    <div class="order_table table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Article</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {% for item in cart.products.all %}
+                                                    
+                                                <tr>
+                                                    <td> {{ item.title|safe|capfirst }} <strong> </strong></td>
+                                                    <td> {{ item.price|floatformat:2|intcomma }} GNF </td>
+                                                </tr>
+
+                                                {% endfor %}
+
+
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                
+                                                <tr class="order_total">
+                                                    <th>Total</th>
+                                                    <td><strong>{{ object.total|floatformat:2|intcomma}} GNF </strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+
+                                    <div class="payment_method">
+                                        <div class="panel-default">
+                                            <label class="checkbox-default" for="currencyCod" data-bs-toggle="collapse"
+                                                data-bs-target="#methodCod">
+                                                <input type="checkbox" id="currencyCod">
+                                                <span>Cash on Delivery</span>
+                                            </label>
+
+                                            <div id="methodCod" class="collapse" data-parent="#methodCod">
+                                                <div class="card-body1">
+                                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State
+                                                        / County, Store Postcode.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-default">
+                                            <label class="checkbox-default" for="currencyPaypal" data-bs-toggle="collapse"
+                                                data-bs-target="#methodPaypal">
+                                                <input type="checkbox" id="currencyPaypal">
+                                                <span>PayPal</span>
+                                            </label>
+                                            <div id="methodPaypal" class="collapse " data-parent="#methodPaypal">
+                                                <div class="card-body1">
+                                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a
+                                                        PayPal account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order_button pt-3">
+                                            <button class="btn btn-md btn-black-default-hover" type="submit">Commander</button>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                             
+                             
+                        </div>
+
+
+                    </form>
+                </div> 
+            </div>
+        </div>
+
+   
+
+
+        {% endif %}
+      
+
+  {% endif %}
+
+
+{% endblock content %}

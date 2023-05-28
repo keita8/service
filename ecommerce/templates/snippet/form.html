@@ -1,0 +1,65 @@
+    <!-- ...:::: Start Customer Login Section :::... -->
+    <div class="customer-login" style="margin-block: 70px; ">
+        <div class="container">
+            <div class="row">
+                <!--login area start-->
+                <div class='col-md-4 col-10  mx-auto'>
+                    <div class="account_form" data-aos="fade-up" data-aos-delay="0">
+                        <h3>Se connecter</h3>
+                        <form action="{% if action_url %} {{ action_url }} {% else %} {% url 'account:login' %} {% endif %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+
+
+                            {% if next_url %}
+                            
+                            <input type="hidden" name="next" value="{{next_url}}">
+
+                            {% endif %}
+
+                            <div class="default-form-box">
+                                {% comment %} <label>{{ form }} <span>*</span></label> {% endcomment %}
+                                {{ form }}
+                            </div>
+
+                            {% comment %} {% if action_url %}
+                            
+                            <div class="default-form-box">
+                                <label>{{ form }} <span>*</span></label>
+                                {{ form }}
+                            </div>
+
+                            {% endif %}
+                            
+
+                            <div class="default-form-box">
+                                <label>{{ form.password.label }} <span>*</span></label>
+                                {{ form.password }}
+                            </div> {% endcomment %}
+
+                            {% comment %} <div class="default-form-box">
+                                <label>{{ form.password.label }} <span>*</span></label>
+                                {{ form.password }}
+                            </div>  {% endcomment %}
+
+                            <div class="login_submit">
+                                <button class="btn btn-md btn-black-default-hover mb-4" type="submit">Se connecter</button>
+                                <!-- <label class="checkbox-default mb-4" for="offer">
+                                    <input type="checkbox" id="offer">
+                                    <span>mot de passe oublié</span>
+                                </label> -->
+                                <a href="{% url 'account:register' %}">S'inscrire?</a>
+                             
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+                <!--login area start-->
+
+            </div>
+        </div>
+    </div> <!-- ...:::: End Customer Login Section :::... -->
+
+

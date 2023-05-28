@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}| S'inscrire {% endblock title %}
+
+
+{% block content %}
+
+
+
+
+
+
+    <!-- ...:::: Start Customer Login Section :::... -->
+    <div class="customer-login" style="margin-block: 70px;">
+        <div class="container">
+            <div class="row">
+              
+                <!--register area start-->
+                <div class='col-md-4 col-10  mx-auto'>
+                    <div class="account_form register" data-aos="fade-up" data-aos-delay="200">
+                        <h3>S'inscrire</h3>
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="default-form-box">
+                                <label for="{{ field.id_for_label }}" >{{ field.label }} <span>*</span></label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                            {% comment %} <div class="default-form-box">
+                                <label>Passwords <span>*</span></label>
+                                <input type="password">
+                            </div> {% endcomment %}
+                            <div class="login_submit">
+                                <button class="btn btn-md btn-black-default-hover" type="submit">S'inscrire</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--register area end-->
+            </div>
+        </div>
+    </div> <!-- ...:::: End Customer Login Section :::... -->
+
+
+
+
+
+
+{% endblock content %}

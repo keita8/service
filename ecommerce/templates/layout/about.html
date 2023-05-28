@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} | A propos de nous{% endblock title %}
+
+{% block content %}
+
+
+
+    <!-- Start About Top -->
+    <div class="about-top" style="margin-block: 70px; ">
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-between d-sm-column">
+                <div class="col-md-6">
+                    <div class="about-img">
+                        <div class="img-responsive">
+                            <img src="{{ about.image.url }}" alt="{{ about.title|safe|capfirst }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="content">
+                        <h3 class="title">{{ about.title|safe|capfirst }}</h3>
+                        {% comment %} <h5 class="semi-title">We believe that every project existing in digital world is a result of an
+                            idea and every idea has a cause.</h5> {% endcomment %}
+                        <p>
+                            {{ about.content|safe|capfirst }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End About Top -->
+
+  
+
+
+
+
+
+
+{% endblock content %}

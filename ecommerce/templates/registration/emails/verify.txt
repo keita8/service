@@ -1,0 +1,11 @@
+Bonjour,
+Veuillez activer votre compte pour {{ email }} en cliquant sur le lien ci-dessous
+
+{{ path }}
+
+Une fois activé, vous pouvez vous connecter
+
+Merci à vous !
+
+IT-SERVICES
+

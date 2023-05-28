@@ -1,0 +1,152 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}| Panier {% endblock title %}
+
+{% block content %}
+
+
+    {% if cart.products.exists %} 
+
+
+        <div class="cart-section" style="margin-block:70px; ">
+                
+            <div class="cart-table-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table_desc">
+                                <div class="table_page table-responsive">
+                                    <table class="table cart-table">
+                                    
+                                        <thead>
+                                            <tr>
+                                                <th class="product_remove">Retirer</th>
+                                                <th class="product_thumb">Image</th>
+                                                <th class="product_name">Article</th>
+                                                <th class="product-price">Prix</th>
+                                                <th class="product_total">Total</th>
+                                            </tr>
+                                        </thead> 
+                                        <tbody class="cart-body">
+                                            
+                                            {% for item in cart.products.all %}
+
+                                
+                                                <tr>
+
+                                                    {% include 'include/add-or-update-to-cart.html' with product=item cart=cart in_cart=True %}
+
+
+                                                    <td class="product_thumb">
+                                                        {% if item.image.all.first %}
+                                                
+                                                
+                                                        <a href="{{ item.get_absolute_url }}">
+                                                            <img src="{{item.image.all.first.image.url}}" alt="{{ item.title|safe|capfirst }}" loading="lazy">
+                                                        </a>
+
+                                                        {% endif %}
+
+                                                    </td>
+                                                    <td class="product_name">
+                                                        <a href="{{ item.get_absolute_url }}" style="text-transform: lowercase;">
+                                                            {{ item.title|safe|capfirst }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-price">{{ item.price|floatformat:2|intcomma }} GNF</td>
+                                                   
+                                                    <td class="product_total"> {{ item.price|floatformat:2|intcomma }} GNF </td>
+                                                </tr>
+                        
+
+                                            {% endfor %}
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="cart_submit">
+                                    <button class="btn btn-md btn-golden" type="submit">update cart</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="coupon_area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code left">
+                                <h3>Coupon</h3>
+                                <div class="coupon_inner">
+                                    <p>Entrez votre code coupon.</p>
+                                    <input class="mb-2" placeholder="Coupon code" type="text">
+                                    <button type="submit" class="btn btn-md btn-golden">Appliquez</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code right">
+                                <h3>Total du panier</h3>
+                                <div class="coupon_inner">
+                                    
+                        
+                                    <div class="cart_subtotal">
+                                        <p>Total TTC</p>
+                                        <p class="cart_amount"> {{cart.total|floatformat:2|intcomma}} GNF</p>
+                                    </div>
+
+                                    <div class="checkout_btn">
+                                        <a href="{% url 'cart:checkout' %}"  class="btn btn-md btn-golden">Commander</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div> 
+
+
+
+    {% else %} 
+
+            <!-- ...::::Start About Us Center Section:::... -->
+
+            <div class="empty-cart-section section-fluid" style="margin-block: 70px;">
+                <div class="emptycart-wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
+                                <div class="emptycart-content text-center">
+                                    <div class="image">
+                                        <img class="img-fluid" src="{% static 'assets/images/emprt-cart/empty-cart.png' %}" alt="">
+                                    </div>
+                                    <h4 class="title">Votre panier est vide</h4>
+                                    <a href="{% url 'shop:main' %}" class="btn btn-lg btn-golden">Continuer le shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            
+            <!-- ...::::End  About Us Center Section:::... -->
+
+
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

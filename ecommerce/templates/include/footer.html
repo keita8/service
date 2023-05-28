@@ -34,14 +34,14 @@
                             <h5 class="title">MON COMPTE</h5>
                             <ul class="footer-nav">
                                 {% if request.user.is_authenticated %}
-                                <li><a href="">Mon compte</a></li>
+                                <li><a href="{% url 'account:dashboard' %}">Mon compte</a></li>
                                 {% else %}
-                                <li><a href="">Se connecter</a></li>
+                                <li><a href="{% url 'account:login' %}">Se connecter</a></li>
                                 {% endif %}
                                 <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="">Questions frequement posées</a></li>
-                                <li><a href="">Historique des articles</a></li>
+                                <li><a href="{% url 'about:faq' %}">Questions frequement posées</a></li>
+                                <li><a href="{% url 'account:history-product' %}">Historique des articles</a></li>
                             </ul>
                         </div>
                         <!-- End Footer Single Item -->
@@ -56,7 +56,7 @@
                                 <li><a href="#">Delivery Information</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
                                 <li>
-                                    <a href="">Contact</a>
+                                    <a href="{% url 'contact:main' %}">Contact</a>
                                 </li>
                                 <li><a href="#">Returns</a></li>
                             </ul>
@@ -117,7 +117,7 @@
                             {% endif %}
                     
                             <div class="form-newsletter">
-                                <form action="" method="POST" novalidate>
+                                <form action="{% url 'marketing:main' %}" method="POST" novalidate>
                                     {% csrf_token %}
                                     <div class="form-fild-newsletter-single-item input-color--golden">
                                         <input type="email" name="email" placeholder="Votre adresse email..." required="true"> 

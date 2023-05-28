@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} | Digital {% endblock title %}
+
+{% block content %}
+
+
+    {% for qs in object_list %}
+    
+        <p>
+            {{qs}}
+        </p>
+    {% endfor %}
+
+
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% block title %} | Données de vente {% endblock title %}
+
+
+{% block content %}
+
+
+<h1>Données de vente</h1>
+
+<div class="row">
+    <div class="col">
+        {% for order in recent_orders %}
+            <p>
+                {{order.order_id}}
+
+            </p>
+
+            <p>
+                {{order.total}}
+
+            </p>
+
+            <p>
+            {{order.timestamp}}
+
+            </p>
+        </li>
+        {% endfor %}
+
+    </div>
+</div>
+    <ul>
+
+        <li>
+            {{order.order_id}}
+        </li>
+        <li>
+            {{order.total}}
+        </li>
+        <li>
+            {{order.timestamp}}
+        </li>
+        <br>
+
+    </ul>
+
+    <br>
+
+    <ul>
+        {% for qs in shipped_orders %}
+            <li>
+                {{qs.order_id}}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        Commande payée <br> 
+        {% for qs in paid_orders %}
+            {{qs.order_id}}
+            {{qs.get_status}}
+        {% endfor %}
+    </p>
+
+{% endblock content %}

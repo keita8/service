@@ -1,0 +1,131 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}| Contact {% endblock title %}
+
+{% block content %}
+
+
+
+
+    <!-- ...::::Start Contact Section:::... -->
+    <div class="contact-section"  style="margin-block-end: 70px; ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Start Contact Details -->
+                    <div class="contact-details-wrapper section-top-gap-100">
+                        <div class="contact-details">
+                            <!-- Start Contact Details Single Item -->
+                            <div class="contact-details-single-item">
+                                <div class="contact-details-icon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="contact-details-content contact-phone">
+                                    <a href="tel:{{ links.phone_number }}">{{ links.phone_number }}</a>
+                                </div>
+                            </div> <!-- End Contact Details Single Item -->
+                            <!-- Start Contact Details Single Item -->
+                            <div class="contact-details-single-item">
+                                <div class="contact-details-icon">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                                <div class="contact-details-content contact-phone">
+                                    <a href="mailto:{{ links.email|safe|lower }}" target="_blank">{{ links.email|safe|lower }}</a>
+                                </div>
+                            </div> <!-- End Contact Details Single Item -->
+                            <!-- Start Contact Details Single Item -->
+                            <div class="contact-details-single-item">
+                                <div class="contact-details-icon">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div class="contact-details-content contact-phone">
+                                    <span>{{ links.address|safe|capfirst }}</span>
+                                </div>
+                            </div> <!-- End Contact Details Single Item -->
+                        </div>
+                        <!-- Start Contact Social Link -->
+                        <div class="contact-social">
+                            <h4>Suivez-nous sur</h4>
+                            <ul>
+                                <li><a href="{{ links.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="{{ links.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="{{ links.instagram }}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+
+                            </ul>
+                        </div> <!-- End Contact Social Link -->
+                    </div> <!-- End Contact Details -->
+                </div>
+                <div class="col-lg-8">
+                    <div class="contact-form section-top-gap-100">
+                        {% if messages %}
+                            {% for message in messages  %}
+                            <h3>{{message}}</h3>
+                            {% endfor %}
+                        {% else %}
+                        
+                        <h3>Contactez notre équipe</h3>
+
+                        {% endif %}
+
+                        <form id="contact-form" action="{% url 'contact:main' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                
+                                {% comment %} {% for field in contact  %}
+                                <div class="col-lg-6">
+                                    <div class="default-form-box mb-20">
+                                        <label for="{{ field.id }}">{{ field.label }}</label>
+                                        {{ field }}
+                                    </div>
+                                </div> 
+                                {% endfor %}  {% endcomment %}
+
+                                <div class="col-lg-6">
+                                    <div class="default-form-box mb-20">
+                                        <label for="{{ contact.id }}">{{ contact.name.label }}</label>
+                                        {{ contact.name }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="default-form-box mb-20">
+                                        <label for="contact-email">{{ contact.email.label }}</label>
+                                        {{ contact.email }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="default-form-box mb-20">
+                                        <label for="contact-subject">{{ contact.subject.label }}</label>
+                                        {{ contact.subject }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="default-form-box mb-20">
+                                        <label for="contact-message">{{ contact.message.label }}</label>
+                                        {{ contact.message }}
+                                        {% comment %} <textarea name="message" id="contact-message" cols="30" rows="10" style="resize:none; "></textarea> {% endcomment %}
+                                    </div>
+                                </div> 
+                                
+                                <div class="col-lg-12">
+                                    <button class="btn btn-lg btn-black-default-hover" type="submit">Envoyez</button>
+                                </div>
+                                {% comment %} <p class="form-messege"></p> {% endcomment %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ...::::ENd Contact Section:::... -->
+
+
+
+
+
+
+
+
+{% endblock content %}

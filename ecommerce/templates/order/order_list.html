@@ -1,0 +1,52 @@
+
+{% load static %}
+{% load humanize %}
+
+
+
+
+
+<h4 style="text-transform: lowercase;" style="margin-block:70px;">Mes commandes</h4>
+<div class="table_page table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>N° commande</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+           
+            {% for qs in orders %}
+                
+            <tr>
+                <td>
+                    <a href="{% url 'account:order-detail' qs.id %}">
+                        {{ qs.order_id}}
+                    </a>
+                </td>
+
+                <td style="text-transform:lowercase;">{{qs.timestamp|date:"D d M Y à H:i"  }} </td>
+                <td>
+                    <span class="success" style="text-transform:lowercase;">
+                    {{qs.get_status}}
+                    </span>
+                </td>
+                <td>
+                    {{qs.total|floatformat:2|intcomma}} GNF
+                </td>
+                  
+               
+            </tr>
+
+            {% endfor %}
+
+            
+        </tbody>
+    </table>
+</div>
+
+
