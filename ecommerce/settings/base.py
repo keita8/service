@@ -42,7 +42,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'django.contrib.humanize',
     
-    
+    'tinymce',
+    'djmoney',
+    'import_export',
+    "mptt",
+    "phonenumber_field",
+
     
     "ecommerce.apps.account",
     "ecommerce.apps.products",
