@@ -55,9 +55,9 @@
                                                             {{ item.title|safe|capfirst }}
                                                         </a>
                                                     </td>
-                                                    <td class="product-price">{{ item.price|floatformat:2|intcomma }} GNF</td>
+                                                    <td class="product-price">{{ item.price|intcomma }} GNF</td>
                                                    
-                                                    <td class="product_total"> {{ item.price|floatformat:2|intcomma }} GNF </td>
+                                                    <td class="product_total"> {{ item.price|intcomma }} GNF </td>
                                                 </tr>
                         
 
@@ -95,7 +95,7 @@
                         
                                     <div class="cart_subtotal">
                                         <p>Total TTC</p>
-                                        <p class="cart_amount"> {{cart.total|floatformat:2|intcomma}} GNF</p>
+                                        <p class="cart_amount"> {{cart.total|intcomma }} GNF</p>
                                     </div>
 
                                     <div class="checkout_btn">

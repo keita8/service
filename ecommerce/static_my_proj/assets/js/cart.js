@@ -54,6 +54,35 @@ $(document).ready(function(){
     
     var productForm = $(".form-product-ajax")
 
+    $.each(productForm, function(index, object){
+        var $this = $(this)
+
+        var submitSpan = $this.find(".submit-span")
+
+        console.log(submitSpan.html())
+        if (data.added) {
+            submitSpan.html('<button type="submit" class="btn btn-block  btn-lg btn-black-default-hover">Retirer</button>')
+        } else {
+            submitSpan.html('<button type="submit"  class="btn btn-block  btn-lg btn-black-default-hover" >Ajouter</button>')
+        }
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     productForm.submit(function(event){
         event.preventDefault();
         console.log("formulaire non envoyé")

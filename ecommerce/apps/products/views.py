@@ -1,6 +1,6 @@
 from django.db import models
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (ListView, DetailView, DeleteView, CreateView, UpdateView, View)
 from ecommerce.apps.order.models import ProductPurchase
 from ecommerce.apps.marketing.forms import EmailForm
@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from ecommerce.apps.analytics.signals import *
 from ecommerce.apps.analytics.mixins import ObjectViewMixin
 from django.contrib.auth.models import AnonymousUser 
-
+from django.contrib import messages
 
 import os
 from wsgiref.util import FileWrapper
@@ -122,14 +122,36 @@ class ProductDownloadView(View):
         
         downloads_obj = downloads_qs.first()
         
+        can_download = False
+        user_ready = True
+        
+        # VERIFIER SI LE CLIENT EST CONNECTÉ À SON COMPTE 
+        if downloads_obj.user_required:
+            if not request.user.is_authenticated:
+                # can_download = True
+                user_ready = False
+            # else:
+            #     # can_download = False
+            #     user_can_download=True
+        
+        purchased_products = Product.objects.none()
+        
         # VERIFIER SI LE FICHIER A TELECHARGER EST GRATUIT OU NON
         if downloads_obj.free:
             can_download = True
+            user_ready = True
+            # ENVOYER LE LIEN DE TELECHARGEMENT AU CLIENT NON CONNECTÉ AU SITE AYANT ACHETE CET ARTICLE
+            # 
         else:
-            products_qs = ProductPurchase.objects.products_by_request(request=request)
-        
-        if downloads_obj.user_required and request.user.is_authenticated:
-            can_download = True
+            purchased_products= ProductPurchase.objects.products_by_request(request=request)
+            if downloads_obj.products in purchased_products:
+                can_download = True
+                
+        if not can_download or not user_ready:
+            messages.error(request, "Vous n'avez pas la permission de telecharger ce fichier")
+            return redirect(downloads_obj.get_default_url())
+            
+
         
         file_root = settings.PROTECTED_ROOT
         filepath = downloads_obj.file.path

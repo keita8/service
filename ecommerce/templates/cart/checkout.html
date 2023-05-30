@@ -80,7 +80,7 @@
                                                     
                                                 <tr>
                                                     <td> {{ item.title|safe|capfirst }} <strong> </strong></td>
-                                                    <td> {{ item.price|floatformat:2|intcomma }} GNF </td>
+                                                    <td> {{ item.price|intcomma }} GNF </td>
                                                 </tr>
 
                                                 {% endfor %}
@@ -92,7 +92,7 @@
                                                 
                                                 <tr class="order_total">
                                                     <th>Total</th>
-                                                    <td><strong>{{ object.total|floatformat:2|intcomma}} GNF </strong></td>
+                                                    <td><strong>{{ object.total|intcomma}} GNF </strong></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
