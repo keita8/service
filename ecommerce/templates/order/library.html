@@ -6,14 +6,34 @@
 
 {% block content %}
 
+    <h4>Digital</h4>
+    <div class="table_page table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Article</th>
+                    <th>Date</th>
+                    <th>Expiration</th>
+                    <th>Lien</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    {% for qs in object_list %}
+                {% for qs in digital_item %}
     
-        <p>
-            {{qs}}
-        </p>
-    {% endfor %}
+                <tr>
+                    <td>{{qs}}</td>
+                    <td>May 10, 2018</td>
+                    <td><span class="danger">Expired</span></td>
+                    <td><a href="#" class="view">Telechargez ici</a></td>
+                </tr>
 
+                {% endfor %}
+
+                
+            </tbody>
+        </table>
+    </div>
 
 
 

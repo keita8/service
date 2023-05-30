@@ -23,7 +23,7 @@
                                     class="nav-link btn btn-block btn-md btn-black-default-hover active">Compte</a>
                             </li>
                             <li> <a href="#orders" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Mes Commandes</a></li>
-                            <li><a href="#downloads" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Downloads</a></li>
+                            <li><a href="#downloads" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Electronique</a></li>
                             <li><a href="#historic" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Historique</a></li>
                             <li><a href="#address" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Adresses</a></li>
                             <li><a href="#account-details" data-bs-toggle="tab" class="nav-link btn btn-block btn-md btn-black-default-hover">Details de votre compte</a>
@@ -75,7 +75,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                {{qs.total|floatformat:2|intcomma}} GNF
+                                                {{qs.total|intcomma}} GNF
                                             </td>
                                               
                                            
@@ -97,35 +97,59 @@
 
 
                         </div>
+
+
+
                         <div class="tab-pane fade" id="downloads">
-                            <h4>Downloads</h4>
+                            {% if is_digit %}
+                            
+
+                            <h4>Support Electronique</h4>
                             <div class="table_page table-responsive">
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Downloads</th>
-                                            <th>Expires</th>
-                                            <th>Download</th>
+                                            
+                                            <th>N° reference</th>
+                                            <th>Article</th>
+                                            
+                                            <th>Lien</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                        
+                                        {% for qs in is_digit %}
+                            
                                         <tr>
-                                            <td>Shopnovilla - Free Real Estate PSD Template</td>
-                                            <td>May 10, 2018</td>
-                                            <td><span class="danger">Expired</span></td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
+                                            
+                                            <td>#{{qs.reference}}</td>
+                                            <td>
+                                                <a href="{{qs.get_absolute_url}} ">
+                                                {{qs.title}}
+                                                </a>
+                                            </td>
+                                            {% for download in qs.get_downloads %}
+                                            <td><a href="{{download.get_download_url}}" class="view">ici</a></td>
+                                            {% endfor %}
+
                                         </tr>
-                                        <tr>
-                                            <td>Organic - ecommerce html template</td>
-                                            <td>Sep 11, 2018</td>
-                                            <td>Never</td>
-                                            <td><a href="#" class="view">Click Here To Download Your File</a></td>
-                                        </tr>
+                        
+                                        {% endfor %}
+                        
+                                        
                                     </tbody>
                                 </table>
                             </div>
+                        
+                        
+                            
+                            
+                            {% else %}
+                            <p>Vous n'avez pas encore commandé d'article digital </p>
+                            {% endif %}
                         </div>
+
+
 
                         <div class="tab-pane fade" id="historic">
                             <h4 style="text-transform: lowercase;">Historique des articles consultés</h4>

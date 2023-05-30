@@ -2,15 +2,16 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %}| Commande {{qs.order_id}} {% endblock title %}
+{% block title %}| Commande {{order_detail.order_id}} {% endblock title %}
 
 {% block content %}
 
 
-{{ qs }}
+<p>
+    {{ order_detail.order_id }}
 
-
-
+hello
+</p>
 
 
 {% endblock content %}

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import *
 from django.utils.safestring import mark_safe
 from django.db import models
@@ -18,7 +19,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import Q
 from mptt.models import MPTTModel, TreeForeignKey, TreeManager, TreeManyToManyField
 from mptt import managers
-
+from django.core.files.storage import FileSystemStorage
 
 
 def get_filename_ext(filepath):
@@ -34,6 +35,11 @@ def upload_image_path(instance, filename):
     return f"products/{new_filename}/{final_filename}"
 
 
+def upload_image_digital_path(instance, filename):
+    new_filename = random.randint(1, 3910209312)
+    name, ext = get_filename_ext(filename)
+    final_filename = f'{new_filename}{ext}'
+    return f"digital/items/{new_filename}/{final_filename}"
 
 
 class ProductQuerySet(models.query.QuerySet):
@@ -170,7 +176,9 @@ class Product(models.Model):
     timestamp   = models.DateTimeField(auto_now_add=True, verbose_name='date ajout')
     is_digit    = models.BooleanField(verbose_name="support digital", default=False)
     
-    
+    def get_downloads(self):
+        qs = self.digitalproductfile_set.all()
+        return qs
     
     def get_absolute_url(self):
         return reverse("products:detail", kwargs={"slug": self.slug})
@@ -277,3 +285,39 @@ class Upload(models.Model):
     class Meta:
         verbose_name = 'Image'
         verbose_name_plural = 'Image'
+        
+        
+
+def upload_product_file_loc(instance, filename):
+    slug = instance.products.slug 
+    if not slug:
+        slug = unique_slug_generator(instance.products)
+    location = f"digital/item/product/{slug}/"  
+    return location + filename  
+        
+
+
+class DigitalProductFile(models.Model):
+    products = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='article')
+    file      = models.FileField(verbose_name='fichier', upload_to=upload_product_file_loc, max_length=100, 
+                                 storage=FileSystemStorage(location=settings.PROTECTED_ROOT))
+    free     = models.BooleanField(verbose_name="en telechargement libre ?", default=False)
+    user_required = models.BooleanField(verbose_name="proprietaire exigé", default=False)
+    
+
+    class Meta:
+        verbose_name = "Fichier Article Digital"
+        verbose_name_plural ="Fichiers Articles Digitaux"
+
+    def __str__(self):
+        return f'{self.products.title}'
+
+    def get_download_url(self):
+        return reverse("products:download", kwargs={"slug": self.products.slug, "pk":self.pk})
+    
+    def get_default_url(self):
+        return self.products.get_absolute_url()
+
+    @property
+    def name(self):
+        return self.file.name

@@ -7,6 +7,10 @@ from import_export.fields import Field
 from import_export.admin import ImportExportModelAdmin
 from import_export.admin import ExportActionMixin
 
+class ProductFileInline(admin.TabularInline):
+    model = DigitalProductFile
+    extra = 1
+
 
 class ProductResource(resources.ModelResource):
     reference = Field(column_name="Reference")
@@ -49,6 +53,7 @@ class ProductResource(resources.ModelResource):
 @admin.register(Product)
 class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_classes = [ProductResource]
+    inlines = [ProductFileInline]
     list_display = ('reference', 'title', 'price', 'category', 'is_active', 'timestamp')
     list_display_links = ('reference', 'title')
     list_filter = ('is_active', )
@@ -99,3 +104,4 @@ admin.site.register(Category, CategoryAdmin)
 
 
 admin.site.register(Upload)
+

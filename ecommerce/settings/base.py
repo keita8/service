@@ -9,7 +9,7 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 
-
+import os
 
 
 
@@ -155,23 +155,37 @@ USE_THOUSAND_SEPARATOR = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-STATIC_URL = "/static/"
-
-STATIC_ROOT = BASE_DIR.parent.parent / "static"
-
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-)
 
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static_my_proj')
+]
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
+PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "protected_media")
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 
 
-MEDIA_URL = "/media/"
+# STATIC_URL = "/static/"
 
-MEDIA_ROOT = BASE_DIR.parent.parent / "media"
+# STATIC_ROOT = BASE_DIR.parent.parent / "static"
+
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# STATICFILES_FINDERS = (
+#     "django.contrib.staticfiles.finders.FileSystemFinder",
+#     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+# )
+
+
+
+
+# MEDIA_URL = "/media/"
+
+# MEDIA_ROOT = BASE_DIR.parent.parent / "media"
 
 
 

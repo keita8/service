@@ -164,11 +164,6 @@ class Orders(models.Model):
             shipping_done = True
             
             
-        # if not facturation_address_required and not self.shipping_address:
-        #     shipping_done = True
-        # if facturation_address_required and not self.shipping_address:
-        #     shipping_done = False
-            
         billing_profile = self.billing
         shipping_address = self.shipping_address
         # billing_address = self.billing_address
@@ -271,6 +266,12 @@ class ProductPurchaseManager(models.Manager):
         return self.get_queryset().by_request(request)
     
     
+    
+    def products_by_request(self, request):
+        qs = self.by_request(request=request).digital()
+        ids_ = [x.product.id for x in qs]
+        products_qs = Product.objects.filter(id__in=ids_).distinct()
+        return products_qs
     
 
 

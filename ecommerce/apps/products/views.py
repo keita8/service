@@ -1,7 +1,8 @@
 from django.db import models
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import (ListView, DetailView, DeleteView, CreateView, UpdateView)
+from django.views.generic import (ListView, DetailView, DeleteView, CreateView, UpdateView, View)
+from ecommerce.apps.order.models import ProductPurchase
 from ecommerce.apps.marketing.forms import EmailForm
 from ecommerce.apps.marketing.models import Newsletter
 from ecommerce.apps.marketing.views import subscribe
@@ -15,6 +16,15 @@ from django.views.decorators.csrf import csrf_exempt
 from ecommerce.apps.analytics.signals import *
 from ecommerce.apps.analytics.mixins import ObjectViewMixin
 from django.contrib.auth.models import AnonymousUser 
+
+
+import os
+from wsgiref.util import FileWrapper
+from mimetypes import guess_type
+from django.conf import settings
+  
+
+
 
 
 
@@ -97,6 +107,54 @@ class ProductDetailView(DetailView):
     
     
     
+
+# DOWNLOAD DIGITAL ITEM VIEW
+class ProductDownloadView(View):
+    def get(self, request, *args, **kwargs):
+        slug = kwargs.get('slug')
+        pk = kwargs.get('pk')
+
+        downloads_qs = DigitalProductFile.objects.filter(pk=pk, products__slug=slug)
+        
+                
+        if downloads_qs.count() != 1:
+            raise Http404("Aucun fichier de telechargement n'est associé")
+        
+        downloads_obj = downloads_qs.first()
+        
+        # VERIFIER SI LE FICHIER A TELECHARGER EST GRATUIT OU NON
+        if downloads_obj.free:
+            can_download = True
+        else:
+            products_qs = ProductPurchase.objects.products_by_request(request=request)
+        
+        if downloads_obj.user_required and request.user.is_authenticated:
+            can_download = True
+        
+        file_root = settings.PROTECTED_ROOT
+        filepath = downloads_obj.file.path
+        final_filepath = os.path.join(file_root, filepath)
+        
+        with open(final_filepath, 'rb') as f:
+            
+            wrapper = FileWrapper(f)
+            mimetype = "application/force-download"
+            guessed_mimetype = guess_type(filepath)[0]
+            
+            if guessed_mimetype:
+                mimetype = guessed_mimetype
+            response = HttpResponse(wrapper, content_type=mimetype)
+            response['Content-Disposition'] = "attachment;filename=%s" %(downloads_obj.name)
+            response['X-SendFile'] = str(downloads_obj.name)
+            return response
+        
+        return redirect(downloads_obj.get_default_url())
+
+  
+  
+  
+  
+  
   
  
 

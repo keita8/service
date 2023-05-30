@@ -1,21 +1,9 @@
-# from django.shortcuts import render
-
-# # Create your views here.
-# def index(request):
-#     template_name = 'layout/index.html'
-#     context = {}
-#     return render(request, template_name, context)
-
-
-
-
-
-
-from typing import Any, Optional
 from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, HttpResponse
 from django.urls import reverse_lazy
+
+from ecommerce.apps.order.models import ProductPurchase
 from .signals import *
 from ecommerce.apps.order.models import Orders
 from .forms import *
@@ -49,7 +37,7 @@ class AccountHomeView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         context["orders"] = Orders.objects.by_request(self.request).not_created()
-    
+        context['is_digit'] = ProductPurchase.objects.products_by_request(self.request).order_by('-id')
         return context
     
         

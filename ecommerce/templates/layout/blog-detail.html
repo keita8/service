@@ -24,7 +24,7 @@
                         </div>
                         <ul class="post-meta" data-aos="fade-up" data-aos-delay="200">
                             <li>PUBLIÉ PAR : <a class="author">{{blog_detail.author|safe|capfirst}} </a></li>
-                            <li><a class="date">{{ blog_detail.created_on|date }} </a></li>
+                            <li><a class="date">{{ blog_detail.created_on|date:"D d M Y"}} </a></li>
                             
                         </ul>
 
@@ -153,8 +153,8 @@
                         <!-- Start comment Form -->
                         <div class="comment-form" data-aos="fade-up" data-aos-delay="0">
                             <div class="coment-form-text-top mt-30">
-                                <h4 class="title mb-3 mt-3">Leave a Reply</h4>
-                                <p>Your email address will not be published. Required fields are marked *</p>
+                                <h4 class="title mb-3 mt-3">Laissez votre commentaire</h4>
+                                <p>Votre adresse email ne sera pas publié. les champs requis sont notés par *</p>
                             </div>
 
                             <form action="#" method="POST" id="myform">
