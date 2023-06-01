@@ -60,14 +60,14 @@ def register_page(request):
     if request.user.is_authenticated:
         return redirect('products:main')
 
-    form = UserRegister(request.POST or None)
+    form = RegisterForm(request.POST or None)
     if form.is_valid():
         print(form.cleaned_data)
         username = form.cleaned_data.get("username")
         email    = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         confirm_password = form.cleaned_data.get("confirm_password")
-        user  = authenticate(request, username=username,email=email, password=password, confirm_password=confirm_password)
+        user  = authenticate(request, email=email, password=password, confirm_password=confirm_password)
         if user is not None:
             login(request, user)
             return redirect("products:main")
