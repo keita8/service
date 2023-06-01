@@ -46,6 +46,11 @@ class UserAdmin(BaseUserAdmin):
 
 
 
-admin.site.register(GuestEmail)
+@admin.register(GuestEmail)
+class GuestEmailAdmin(admin.ModelAdmin):
+    list_display = ('email', 'active', 'update', 'timestamp')
+    readonly_fields = ('update', 'timestamp')
+    search_fields = ('email', )
+    list_filter = ('update', 'timestamp')
 
 # admin.site.register(UserSession)

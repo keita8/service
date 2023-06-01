@@ -87,7 +87,7 @@ class ProductDetailView(DetailView):
         try:
             context['related_products'] = self.get_object().related
         except AttributeError:
-            raise Http404("Aucun article trouvé !")
+            raise Http404
         return context
         
     
@@ -102,7 +102,7 @@ class ProductDetailView(DetailView):
             qs = Product.objects.filter(slug=slug, active=True)
             instance = qs.first()
         except:
-            raise Http404("Cet article n'existe pas !!!")
+            raise Http404
 
         # if not request:
         #     pass
