@@ -41,7 +41,12 @@
                                 <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="privacy-policy.html">Privacy Policy</a></li>
                                 <li><a href="{% url 'about:faq' %}">Questions frequement posées</a></li>
-                                <li><a href="{% url 'account:history-product' %}">Historique des articles</a></li>
+                                {% if request.user.is_authenticated %}
+                                    
+                                <li><a href="{% url 'account:history-product' %}">Historique</a></li>
+
+                                {% endif %}
+
                             </ul>
                         </div>
                         <!-- End Footer Single Item -->

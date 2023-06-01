@@ -158,29 +158,6 @@
 
 
 
-                        <div class="tab-pane fade" id="historic">
-                            <h4 style="text-transform: lowercase;">Historique des articles consultés</h4>
-                            <div class="table_page table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Produit</th>
-                                            <th>Downloads</th>
-                                            <th>Expires</th>
-                                            <th>Download</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% with history_object_list as history %}
-                                       {% include 'registration/history.html' with history_object_list=history_object_list %}
-                                       {% endwith %}
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
                         <div class="tab-pane" id="address">
                             <p>The following addresses will be used on the checkout page by default.</p>
                             <h5 class="billing-address" style="text-transform: lowercase;">Adresse de facturation</h5>

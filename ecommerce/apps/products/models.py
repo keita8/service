@@ -130,10 +130,7 @@ class ProductManager(models.Manager):
     def search(self, query):
         return self.get_queryset().active().search(query=query)
     
-    
-
-
-    
+       
 class Category(MPTTModel):
     cat_cku   = models.UUIDField(editable=False, unique=True, default=uuid.uuid4)
     parent    = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
@@ -168,8 +165,7 @@ class Category(MPTTModel):
         return f'{self.title}'
       
     
-
-      
+    
 class Product(models.Model):
     category   = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='categorie', related_name='products', null=True, blank=True)
     cku         = models.UUIDField(editable=False, unique=True, default=uuid.uuid4)
@@ -343,11 +339,6 @@ class DigitalProductFile(models.Model):
     
     
     
-
-
-
-
-
     
 class HeroSection(models.Model):
     name = models.CharField(max_length = 150, verbose_name="titre", blank=True, null=True, default='hero')

@@ -1,3 +1,87 @@
-{% for history in object_list %}
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} | Historique {% endblock title %}
+
+{% block content %}
+
+{% comment %} {% for history in object_list %}
     <a href="{{ history.get_absolute_url }}">{{ history }}</a>
-{% endfor %}
+{% endfor %} {% endcomment %}
+
+
+
+
+    <!-- ...:::: Start Wishlist Section:::... -->
+    <div class="wishlist-section" style="margin-block: 80px; ">
+        <!-- Start Cart Table -->
+        <div class="wishlish-table-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table_desc">
+                            <div class="table_page table-responsive">
+                                <table>
+                                    <!-- Start Wishlist Table Head -->
+                                    <thead>
+                                        <tr>
+                                            {% comment %} <th class="product_remove">Delete</th> {% endcomment %}
+                                            <th class="product_thumb">Image</th>
+                                            <th class="product_name">Article</th>
+                                            <th class="product-price">Prix</th>
+                                           
+                                            <th class="product_addcart">Ajouter au panier</th>
+                                        </tr>
+                                    </thead> <!-- End Cart Table Head -->
+                                    <tbody>
+                                        <!-- Start Wishlist Single Item-->
+                                        {% for history in object_list %}
+
+                                        <tr>
+                                            {% comment %} <td class="product_remove">
+                                                <a href="#"><i class="fa fa-trash-o"></i></a>
+                                            </td> {% endcomment %}
+                                            <td class="product_thumb">
+                                                {% if history.image.all.first %}
+                                                
+                                                
+                                                <a href="{{ history.get_absolute_url }}">
+                                                    <img src="{{history.image.all.first.image.url}}" alt="{{history.title|safe|capfirst}}">
+                                                </a>
+
+                                                {% endif %}
+                                            </td>
+                                            <td class="product_name" style="text-transform: lowercase; ">
+                                                <a href="{{ history.get_absolute_url }}">
+                                                    {{ history }}
+                                                </a>
+                                            </td>
+                                            <td class="product-price">{{history.price|intcomma}} GNF </td>
+                                           
+                                            <td class="product_addcart">
+                                                
+                                                {% include 'include/add-or-update-to-cart.html' with product=history cart=cart %}
+                            
+                                            </td>
+                                        </tr> 
+                                        
+                                        {% endfor %}
+
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End Cart Table -->
+    </div> <!-- ...:::: End Wishlist Section:::... -->
+
+
+
+
+
+
+{% endblock content %}
