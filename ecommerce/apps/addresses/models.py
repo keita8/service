@@ -33,8 +33,8 @@ class Adresse(models.Model):
     
     
     class Meta:
-        verbose_name = "Differente adresse"
-        verbose_name_plural = "Differentes adresses"
+        verbose_name = "Adresse d'expédition"
+        verbose_name_plural = "Adresses d'expédition"
         ordering = ("-id", )
 
 
