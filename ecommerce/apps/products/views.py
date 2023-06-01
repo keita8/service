@@ -17,7 +17,7 @@ from ecommerce.apps.analytics.signals import *
 from ecommerce.apps.analytics.mixins import ObjectViewMixin
 from django.contrib.auth.models import AnonymousUser 
 from django.contrib import messages
-
+from ecommerce.apps.analytics.mixins import ObjectViewMixin
 import os
 from wsgiref.util import FileWrapper
 from mimetypes import guess_type
@@ -73,7 +73,7 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 
 
 # PRODUCT DETAIL VIEW
-class ProductDetailView(DetailView):
+class ProductDetailView(ObjectViewMixin, DetailView):
     template_name = 'layout/detail.html'
     context_object_name = 'detail'
     slug_url_kwarg = 'slug'
@@ -115,6 +115,8 @@ class ProductDetailView(DetailView):
         return instance
     
     
+
+
     
 
 # DOWNLOAD DIGITAL ITEM VIEW

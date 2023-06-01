@@ -35,13 +35,19 @@
                     <!-- Start Thumbnail Image -->
                     <div class="product-image-thumb product-image-thumb-horizontal swiper-container pos-relative mt-5">
                         <div class="swiper-wrapper">
-                            {% for img in detail.image.all  %}
-                            <div class="product-image-thumb-single swiper-slide">
-                                <img class="img-fluid" src="{{ img.image.url }}"
-                                    alt="">
-                            </div>
-                            {% endfor %}
+                            {% if detail.image.count > 1 %}
+
+                                {% for img in detail.image.all  %}
+                                <div class="product-image-thumb-single swiper-slide">
+                                    <img class="img-fluid" src="{{ img.image.url }}" alt="{{ img.image.products|safe|capfirst }}">
+                                </div>
+                                {% endfor %}
                             
+                            {% else %}
+                            
+                            
+                            {% endif %}
+                                
                         </div>
                         <!-- Add Arrows -->
                         <div class="gallery-thumb-arrow swiper-button-next"></div>
@@ -82,12 +88,7 @@
                         <br>
                         <br>
 
-                        <div class="product-details-meta mb-20">
-                            <a href="wishlist.html" class="icon-space-right">
-                                <i class="icon-heart"></i>Liste de souhait
-                            </a>
-                            <a href="compare.html" class="icon-space-right"><i class="icon-refresh"></i>Comparer</a>
-                        </div> <!-- End  Product Details Meta Area-->
+                  
                     </div> <!-- End Product Variable Area -->
 
                     {% if detail.category %}
@@ -129,7 +130,7 @@
                                 Specification
                             </a></li>
                         <li><a class="nav-link" data-bs-toggle="tab" href="#review">
-                                Reviews (1)
+                                Notes (1)
                             </a></li>
                     </ul> <!-- End Product Details Tab Button -->
 

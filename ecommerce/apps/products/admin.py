@@ -106,3 +106,7 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Upload)
 
 admin.site.register(HeroSection)
+
+admin.site.register(Specification)
+
+admin.site.register(Content)

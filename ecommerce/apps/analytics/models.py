@@ -65,8 +65,8 @@ class ObjectView(models.Model):
     
     
     class Meta:
-        verbose_name = "Objet Vue"
-        verbose_name_plural = "Objets Vues"
+        verbose_name = "Article consulté"
+        verbose_name_plural = "Articles consultés"
         ordering = ('-timestamp', )
 
 
@@ -137,7 +137,7 @@ def object_viewed_receiver(sender, instance, request, *args, **kwargs):
         pass
     user = request.user
     new_view_instance = ObjectView.objects.create(
-                user=request.user, 
+                user=user, 
                 content_type=c_type,
                 object_id=instance.id,
                 ip_address=ip_address
