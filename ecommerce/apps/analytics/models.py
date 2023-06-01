@@ -50,7 +50,7 @@ class ObjectViewedManager(models.Manager):
 
 
 class ObjectView(models.Model):
-    user = models.ForeignKey(User,verbose_name='client', null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,verbose_name='client', null=True, blank=True, on_delete=models.CASCADE, default=1)
     ip_address = models.CharField(max_length = 350, null=True, blank=True, verbose_name='adresse ip du client')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name='contenu')
     object_id = models.PositiveIntegerField(verbose_name='identifiant')
@@ -61,7 +61,7 @@ class ObjectView(models.Model):
     objects = ObjectViewedManager()
 
     def __str__(self):
-        return f"{self.content_object} vue le {self.timestamp:%d-%m-%Y à %H:%M}"
+        return f"{self.content_object}  consulté le {self.timestamp:%d-%m-%Y à %H:%M}"
     
     
     class Meta:
