@@ -128,9 +128,16 @@
                                                 {{qs.title}}
                                                 </a>
                                             </td>
+                                            {% if qs.get_downloads %}
+                                                
                                             {% for download in qs.get_downloads %}
-                                            <td><a href="{{download.get_download_url}}" class="view">Téléchargez</a></td>
+                                            <td><a href="{{download.get_download_url}}" class="view" style="text-transform: lowercase;">Téléchargez</a></td>
                                             {% endfor %}
+
+                                            {% else %}
+                                            <td><a href="#" class="view" style="text-transform: lowercase;">Lien non disponible</a></td>
+                                            {% endif %}
+
 
                                         </tr>
                         

@@ -5,7 +5,7 @@ from django.views.generic import *
 from django.urls import path
 from django.contrib.auth import views as auth_views 
 from ecommerce.apps.products.views import UserProductHistoryView
-from ecommerce.apps.order.views import OrderDetailView, OrderListView, LibraryView
+from ecommerce.apps.order.views import OrderDetailView, OrderListView, LibraryView, VerifyOwnership
 
 
 app_name = 'account'
@@ -45,4 +45,5 @@ urlpatterns = [
     path('', OrderListView.as_view(), name='orders'),
     path('order/<int:id>/', OrderDetailView.as_view(), name='order-detail'),
     path('digital/', LibraryView.as_view(), name='digital-items'),
+    path('verify/ownership/', VerifyOwnership.as_view(), name='verify-ownership'),
 ]

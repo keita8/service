@@ -17,16 +17,18 @@ from ecommerce.apps.addresses.forms import AdressForm
 
 
 def cart_detail_api_view(request):
-    cart = Cart.objects.new_or_get(request=request)
-    products = [{"name": x.title, "price": x.price} for x in cart.product.all()]
+    
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    
+    print(cart_obj)
+    products = [{"name": x.title, "price": x.price} for x in cart_obj.products.all()]
+    print(products)
     cart_data = {
         "products": products,
-        "total": cart.total
+        "total": cart_obj.total
     }
     print(cart_data)
-    return HttpResponse(cart_data)
-    # return JsonResponse(cart_data)
-
+    return JsonResponse(cart_data)
 
 
 
@@ -142,14 +144,6 @@ def chechout_homepage(request):
         if facturation_address_id or livraison_address_id:
             order_obj.save()
             
-            
-    print()
-    print(f'facturation : {facturation_address_id}')
-    print(f'livraison : {livraison_address_id}')
-    print()
-
-   
-    print(f"mes commandes {order_obj} - {cart_obj} ")
     
     if request.method == "POST":
         is_done = order_obj.check_done
@@ -190,6 +184,8 @@ def chechout_homepage(request):
 
 
 
+
+
 def checkout_done(request):
     template_name = 'cart/checkout-done.html'
     context = {}
@@ -200,32 +196,8 @@ def checkout_done(request):
 
 
 
-def delete_cart(request):
-    product_id = request.POST.get('product_id')
-    return HttpResponse(product_id)
 
 
-
-
-
-
-# def finalize_checkout(request):
-#     if request.method == "POST":
-#         is_done = order_obj.check_done()
-#         cart_id = request.session.get('cart_id', None)
-#         cart_id.delete()
-#         print(is_done)
-#         print(f"suppression du panier {cart_id}")
-#         # if order_obj.check_done():
-#         #     print
-#         #     order_obj.mark_paid()
-#         #     del cart_obj
-#         #     print(f"paiement effectué:  {order_obj.mark_paid()}")
-#         #     request.session['cart_items'] = 0
-#         #     cart_obj.products.count().delete()
-#         #     del request.session['cart_id']
-#         #     print(f"après suppression du panier {request.session['cart_id']}")
-#         #     return redirect('cart:main')
 
 
 

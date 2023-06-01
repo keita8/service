@@ -46,7 +46,31 @@ function updateUserOrder(productId, action) {
     .then(response => console.log(JSON.stringify(response)))
 }
 
+function getOwnedProduct(productId){
+    var actionEndpoint = '/accounts/verify/ownership/'
+    var httpMethod = 'GET'
+    var data = {
+        product_id:productId
+    }
 
+    $.ajax({
+        url: actionEndpoint,
+        method: httpMethod,
+        data:data,
+        success: function(data){
+            if(data.owner){
+                return true
+            }else{
+                return false
+            }
+        },
+        error: function(error){
+            console.log(error)
+        }
+    })
+
+
+}
 
 
 
@@ -56,15 +80,26 @@ $(document).ready(function(){
 
     $.each(productForm, function(index, object){
         var $this = $(this)
-
+        var isUser = $this.attr('data-user')
         var submitSpan = $this.find(".submit-span")
+        var productInput = $this.find("[name='product_id']")
+        var productId = $this.find("value")
+        var productIsDigital = productInput.attr("data-is-digital")
+
+
+        if (productIsDigital && isUser) {
+
+            var isOwned = getOwnedProduct(productId);
+
+            if (isOwned) {
+                
+                submitSpan.html('<a href="/library/">Dans la bibliothèque</a>')
+                
+            }
+        
+        }
 
         console.log(submitSpan.html())
-        if (data.added) {
-            submitSpan.html('<button type="submit" class="btn btn-block  btn-lg btn-black-default-hover">Retirer</button>')
-        } else {
-            submitSpan.html('<button type="submit"  class="btn btn-block  btn-lg btn-black-default-hover" >Ajouter</button>')
-        }
 
     })
 
@@ -130,13 +165,17 @@ $(document).ready(function(){
     })
 
     function refreshCart(){
-        console.log("panier courant")
-        var carTable = $(".cart-table")
+
+        var carTable = $(".cart-section")
         var carBody = carTable.find(".cart-body")
+        var cartsubtotal = $(".cart_subtotal")
+        var productsRow = carBody.find(".cart-product")
+        var currentUrl = window.location.href
 
-        carBody.html("<h1>Changement effectué !!!</h1> ")
+        //cart_amount
 
-        var refreshCartUrl = "/api/cart/"
+
+        var refreshCartUrl = "api/cart/"
         var refreshCartMethod = "GET";
         var data = {};
         $.ajax({
@@ -146,6 +185,12 @@ $(document).ready(function(){
             success:function(data){
                 console.log("operation effectuée avec succès !!!")
                 console.log(data)
+                if (data.products.length > 0) {
+                   
+                    cartsubtotal.find(".cart_amount").text(data.total)
+                } else {
+                    window.location.href = currentUrl
+                }
             },
             error:function(errorData) {
                 console.log("erreur")

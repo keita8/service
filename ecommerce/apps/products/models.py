@@ -46,6 +46,10 @@ class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(is_active=True)
     
+    
+    def is_featured(self):
+        return self.filter(featured=True)
+    
     def search(self, query):
         lookups =( 
                    Q(title__icontains=query) 
@@ -93,6 +97,11 @@ class ProductManager(models.Manager):
 
     def all(self):
         return self.get_queryset().active()
+    
+    
+    
+    def features(self):
+        return self.get_queryset().is_featured()
     
     
     def get_by_id(self, id):
@@ -174,6 +183,9 @@ class Product(models.Model):
     in_stock    = models.BooleanField("En stock ?", default=True)
     timestamp   = models.DateTimeField(auto_now_add=True, verbose_name='date ajout')
     is_digit    = models.BooleanField(verbose_name="support digital", default=False)
+    featured    = models.BooleanField(default=False)
+    
+    
     
     def get_downloads(self):
         qs = self.digitalproductfile_set.all()
@@ -236,10 +248,6 @@ class Product(models.Model):
         return f'{self.title}'
     
     
-
-
-
-
 
 
 
@@ -320,3 +328,40 @@ class DigitalProductFile(models.Model):
     @property
     def name(self):
         return self.file.name
+    
+    
+    
+
+
+
+
+class Hero(models.Model):
+    title = models.CharField(verbose_name="article", max_length=50, unique=True)
+    image = models.ImageField(
+        'Image',
+        upload_to=upload_image_path,
+    )
+    height = models.PositiveIntegerField(
+        'Image Height',
+        blank=True,
+        null=True
+    )
+    width = models.PositiveIntegerField(
+        'Image Width',
+        blank=True,
+        null=True
+    )
+
+
+    
+
+    class Meta:
+        verbose_name = "Hero"
+        verbose_name_plural = "Hero"
+
+    def __str__(self):
+        return f'{self.title}'
+
+    
+    # def get_absolute_url(self):
+    #     return reverse("Base_detail", kwargs={"pk": self.pk})

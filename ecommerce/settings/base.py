@@ -28,7 +28,7 @@ SECRET_KEY ="django-insecure-fz(terk0ud&3tuf=a^=-h3yl+3)8&3c(-$4_--h&93vcgva2^0"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default="False")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -90,7 +90,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "ecommerce.apps.social.context_processors.link",
-                "ecommerce.apps.blog.context_processors.blog_latest"
+                "ecommerce.apps.blog.context_processors.blog_latest",
+
             ],
         },
     },
@@ -102,16 +103,16 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if not DEBUG:
-    DATABASES = {
-        'default': dj_database_url.parse(config("DATABASE_URL"))
-    }
-else:
+if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": BASE_DIR / "db.sqlite3",
         }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(config("DATABASE_URL"))
     }
 
 

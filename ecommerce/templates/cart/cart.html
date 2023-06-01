@@ -30,14 +30,15 @@
                                             </tr>
                                         </thead> 
                                         <tbody class="cart-body">
-                                            
+                                          
                                             {% for item in cart.products.all %}
 
                                 
-                                                <tr>
+                                                <tr class="cart-product">
 
                                                     {% include 'include/add-or-update-to-cart.html' with product=item cart=cart in_cart=True %}
-
+                                              
+                                                   
 
                                                     <td class="product_thumb">
                                                         {% if item.image.all.first %}
@@ -57,11 +58,12 @@
                                                     </td>
                                                     <td class="product-price">{{ item.price|intcomma }} GNF</td>
                                                    
-                                                    <td class="product_total"> {{ item.price|intcomma }} GNF </td>
+                                                    <td class="product_total"> {{ item.price|intcomma }} GNF</td>
                                                 </tr>
                         
 
                                             {% endfor %}
+                                           
                                             
                                         </tbody>
                                     </table>
@@ -113,7 +115,6 @@
 
     {% else %} 
 
-            <!-- ...::::Start About Us Center Section:::... -->
 
             <div class="empty-cart-section section-fluid" style="margin-block: 70px;">
                 <div class="emptycart-wrapper">
@@ -133,8 +134,6 @@
                 </div>
             </div>  
             
-            <!-- ...::::End  About Us Center Section:::... -->
-
 
     {% endif %}
 

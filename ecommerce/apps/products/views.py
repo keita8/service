@@ -31,14 +31,22 @@ from django.conf import settings
 # PRODUCT LIST VIEW
 class ProductListView(ListView):
     model = Product
-    # form_class = EmailForm
     template_name = 'layout/index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context["features"] = Product.objects.features()
+        context['categories'] = Category.objects.all().filter(active=True)[:4]
+        context['hero'] = Hero.objects.all()[:1]
+        return context
+    
     
  
     def get_queryset(self, *args, **kwargs):
         request = self.request
-        categories = Category.objects.all().filter(active=True)
+
         images = Product.objects.select_related('products').all()
+
         return Product.objects.all()
     
 
@@ -118,7 +126,7 @@ class ProductDownloadView(View):
         
                 
         if downloads_qs.count() != 1:
-            raise Http404("Aucun fichier de telechargement n'est associé")
+            raise Http404
         
         downloads_obj = downloads_qs.first()
         

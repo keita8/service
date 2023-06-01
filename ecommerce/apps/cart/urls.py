@@ -9,5 +9,4 @@ urlpatterns = [
     path('update/', cart_update, name="update"),
     path('checkout/', chechout_homepage, name='checkout'),
     path('success/', checkout_done, name='success'),
-    path('delete/', delete_cart, name='delete'),
 ]
