@@ -21,12 +21,17 @@
 
             <div class="swiper-wrapper">
 
-
+                {% for hero in hero %}
                 <div class="hero-single-slider-item swiper-slide">
-                    
+                    {% if hero.image %}
                     <div class="hero-slider-bg">
-                        <img src="{{ hero.image.url }}" alt="{{ hero.title|safe|capfirst }}" loading="lazy">
+                        <img src="{{hero.image.url}}" alt="hero" loading="lazy">
                     </div>
+                    {% else %}
+                    <div class="hero-slider-bg">
+                        <img src="{% static 'assets/images/hero-slider/home-1/hero-slider-1.jpg' %}" alt="hero" loading="lazy">
+                    </div>
+                    {% endif %}
                    
                     <div class="hero-slider-wrapper">
                         <div class="container">
@@ -40,6 +45,7 @@
                         </div>
                     </div>
                 </div> 
+                {% endfor %}
 
 
             </div>
@@ -114,7 +120,7 @@
         </div>
     </div>
 
-    <!-- {% endif %} -->
+  {% endif %}
 
 
 
@@ -167,12 +173,11 @@
             </div>
         </div>
     </div>
-    <!-- End Service Section -->
 
 
 
 
-    <!-- Start Banner Section -->
+  
     <div class="banner-section section-top-gap-100 section-fluid">
         <div class="banner-wrapper">
             <div class="container-fluid">
@@ -265,7 +270,6 @@
             </div>
         </div>
     </div>
-    <!-- End Banner Section -->
 
 
 
@@ -366,6 +370,43 @@
     
 
 
+    {% if promo %}
+    
+    
+        <!-- Start Banner Section -->
+        <div class="banner-section section-top-gap-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 offset-xl-2">
+                        <!-- Start Banner Single Item -->
+                        <div class="banner-single-item banner-style-3 banner-animation img-responsive">
+                            {% if promo.image.all.first %}
+                                                
+                            <div class="image">
+                                <img class="img-fluid" src="{{promo.image.all.first.image.url}}" alt="{{promo.title|safe|capfirst}}">
+                            </div>
+
+                            {% endif %}
+
+                            <div class="content">
+                                <h3 class="title">{{promo.title|safe|capfirst}}</h3>
+                                <h5 class="sub-title">Designez votre maison à votre guise</h5>
+                                <a href="{{ promo.get_absolute_url }}"
+                                    class="btn btn-lg btn-outline-golden icon-space-left"><span
+                                        class="d-flex align-items-center">Decouvrez-maintenant <i
+                                            class="ion-ios-arrow-thin-right"></i></span></a>
+                            </div>
+                        </div>
+                        <!-- End Banner Single Item -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Banner Section -->
+
+        
+    {% else %}
+    
     <!-- Start Banner Section -->
     <div class="banner-section section-top-gap-100">
         <div class="container">
@@ -380,7 +421,7 @@
                             <h3 class="title">Fourniture Moderne &
                                 Collection Basique </h3>
                             <h5 class="sub-title">Designez votre maison à votre guise</h5>
-                            <a href="#"
+                            <a href="{% url 'shop:main' %}"
                                 class="btn btn-lg btn-outline-golden icon-space-left"><span
                                     class="d-flex align-items-center">Decouvrez-maintenant <i
                                         class="ion-ios-arrow-thin-right"></i></span></a>
@@ -392,6 +433,9 @@
         </div>
     </div>
     <!-- End Banner Section -->
+
+    {% endif %}
+
 
 
 
@@ -528,7 +572,7 @@
                                                     class="read-more-btn icon-space-left">En savoir plus <span><i
                                                             class="ion-ios-arrow-thin-right"></i></span></a>
                                                 <div class="post-meta">
-                                                    <a class="date">{{ post.created_on|date }}</a>
+                                                    <a class="date">{{ post.created_on|date:"d/m/Y" }}</a>
                                                 </div>
                                             </div>
                                         </div>

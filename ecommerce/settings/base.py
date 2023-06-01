@@ -91,7 +91,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "ecommerce.apps.social.context_processors.link",
                 "ecommerce.apps.blog.context_processors.blog_latest",
-
+                "ecommerce.apps.instagram.context_processors.instagramm",
             ],
         },
     },

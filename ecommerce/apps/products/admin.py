@@ -105,4 +105,4 @@ admin.site.register(Category, CategoryAdmin)
 
 admin.site.register(Upload)
 
-admin.site.register(Hero)
+admin.site.register(HeroSection)

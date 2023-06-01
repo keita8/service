@@ -46,6 +46,9 @@ class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(is_active=True)
     
+    def in_solde(self):
+        return self.filter(item_promo=True)
+    
     
     def is_featured(self):
         return self.filter(featured=True)
@@ -102,6 +105,12 @@ class ProductManager(models.Manager):
     
     def features(self):
         return self.get_queryset().is_featured()
+    
+    
+        
+    def in_solde(self):
+        return self.get_queryset().in_solde()
+    
     
     
     def get_by_id(self, id):
@@ -183,7 +192,9 @@ class Product(models.Model):
     in_stock    = models.BooleanField("En stock ?", default=True)
     timestamp   = models.DateTimeField(auto_now_add=True, verbose_name='date ajout')
     is_digit    = models.BooleanField(verbose_name="support digital", default=False)
-    featured    = models.BooleanField(default=False)
+    featured    = models.BooleanField(default=False, verbose_name='articles phares')
+    item_promo  = models.BooleanField(verbose_name="en promo", default=False)
+    
     
     
     
@@ -335,33 +346,20 @@ class DigitalProductFile(models.Model):
 
 
 
-class Hero(models.Model):
-    title = models.CharField(verbose_name="article", max_length=50, unique=True)
-    image = models.ImageField(
-        'Image',
-        upload_to=upload_image_path,
-    )
-    height = models.PositiveIntegerField(
-        'Image Height',
-        blank=True,
-        null=True
-    )
-    width = models.PositiveIntegerField(
-        'Image Width',
-        blank=True,
-        null=True
-    )
 
+    
+class HeroSection(models.Model):
+    name = models.CharField(max_length = 150, verbose_name="titre", blank=True, null=True, default='hero')
+    image = models.ImageField( upload_to=upload_image_path, height_field=None, width_field=None, max_length=None)
+    
 
     
 
     class Meta:
-        verbose_name = "Hero"
-        verbose_name_plural = "Hero"
+        verbose_name ="Hero Section"
+        verbose_name_plural ="Hero Sections"
+        ordering = ('-id', )
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.name}'
 
-    
-    # def get_absolute_url(self):
-    #     return reverse("Base_detail", kwargs={"pk": self.pk})

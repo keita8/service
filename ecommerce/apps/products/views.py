@@ -37,7 +37,8 @@ class ProductListView(ListView):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context["features"] = Product.objects.features()
         context['categories'] = Category.objects.all().filter(active=True)[:4]
-        context['hero'] = Hero.objects.all()[:1]
+        context['hero'] = HeroSection.objects.all()
+        context['promo'] = Product.objects.all().in_solde().first()
         return context
     
     
