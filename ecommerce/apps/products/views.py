@@ -73,7 +73,8 @@ class UserProductHistoryView(LoginRequiredMixin, ListView):
 
 
 # PRODUCT DETAIL VIEW
-class ProductDetailView(ObjectViewMixin, DetailView):
+# class ProductDetailView(ObjectViewMixin, DetailView):
+class ProductDetailView(DetailView):
     template_name = 'layout/detail.html'
     context_object_name = 'detail'
     slug_url_kwarg = 'slug'
