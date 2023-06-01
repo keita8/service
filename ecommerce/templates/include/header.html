@@ -222,7 +222,6 @@
                 </ul>
 
                 <ul class="user-link">
-                    <li><a href="#">Wishlist</a></li>
                     <li><a {% if 'cart' in  request.path %} class="active main-menu-link" style="color:#B19361;" {% endif %} href="{% url 'cart:main' %}">panier</a></li>
                 </ul>
             </div>
