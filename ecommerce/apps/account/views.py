@@ -36,13 +36,9 @@ class AccountHomeView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        context["orders"] = Orders.objects.by_request(self.request).not_created()
+        context["orders"] = Orders.objects.by_request(self.request)
         context['is_digit'] = ProductPurchase.objects.products_by_request(self.request).order_by('-id')
         return context
-    
-        
-    # def get_queryset(self):
-    #     return Orders.objects.by_request(self.request).not_created()
     
     
     def get_object(self):

@@ -62,7 +62,7 @@
                                             
                                         <tr>
                                             <td>
-                                                <a href="{% url 'account:order-detail' qs.id %}">
+                                                <a>
                                                     {{ qs.order_id}}
                                                 </a>
                                             </td>
@@ -151,7 +151,7 @@
                             
                             
                             {% else %}
-                            <p>Vous n'avez pas encore commandé d'article digital </p>
+                            <h4 style="text-transform: lowercase;">Vous n'avez pas encore commandé d'article digital </h4>
                             {% endif %}
                         </div>
 

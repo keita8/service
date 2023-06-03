@@ -27,9 +27,9 @@ class OrderListView(LoginRequiredMixin, ListView):
 # DETAIL D'UNE COMMANDE
 class OrderDetailView(LoginRequiredMixin, DetailView):
     template_name = 'order/order_detail.html'
-    context_object_name = 'order_detail'
+  
     def get_object(self):
-        qs = Orders.objects.by_request(self.request).filter(order_id=self.kwargs.get('order_id'))
+        qs = Orders.objects.by_request(self.request).filter(order_id=self.kwargs.get('order_id')).not_created()
         if qs.count() == 1:
             return qs.first()
         return Http404

@@ -78,6 +78,10 @@ class OrderManager(models.Manager):
         return OrderManagerQuerySet(self.model, using=self._db)
     
     
+    def not_created(self):
+        return self.get_queryset().not_created()
+    
+    
     
     def recent(self):
         return self.get_queryset().recent()
@@ -147,6 +151,12 @@ class Orders(models.Model):
 
     def __str__(self):
         return f'{self.billing}'
+    
+    
+    
+    def get_absolute_url(self):
+        return reverse("account:order-detail", kwargs={"pk": self.pk})
+    
     
     
     @property

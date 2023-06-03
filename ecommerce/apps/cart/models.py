@@ -113,7 +113,7 @@ def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     
     TVA = 1.18
     if instance.subtotal > 0:
-        instance.total = Decimal(instance.subtotal) * Decimal(TVA)
+        instance.total = Decimal(instance.subtotal) 
     else:
         instance.total = 0.00
     

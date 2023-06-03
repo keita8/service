@@ -8,9 +8,15 @@
 
 
 <p>
-    {{ order_detail.order_id }}
 
-hello
+    {{ object_list }}
+
+    {% for product in object_list.cart.products.all %}
+        <p>
+            {{ product }}
+        </p>
+    {% endfor %}
+
 </p>
 
 
