@@ -7,8 +7,11 @@
 
 
 <h1>Données de vente</h1>
-
+<p>
+    Nombre de panier {{ recent_orders_cart }}
+</p>
 <div class="row">
+    <p>Recentes commandes {{recent_orders_total.total__sum}} </p>
     <div class="col">
         {% for order in recent_orders %}
             <p>
@@ -47,6 +50,7 @@
 
     <br>
 
+    <p>Commande livrée</p>
     <ul>
         {% for qs in shipped_orders %}
             <li>

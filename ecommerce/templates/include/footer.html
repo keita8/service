@@ -11,17 +11,45 @@
                         <!-- Start Footer Single Item -->
                         <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
                             data-aos-delay="400">
-                            <h5 class="title">CATÉGORIES</h5>
+                            <h5 class="title">COORDONNÉES</h5>
                             <ul class="footer-nav">
-                                {% for cat in categorie_product|slice:5 %}
-                                    
-                                     <li>
-                                        <a href="{{cat.get_url}}">
-                                            {{ cat.categorie|safe|lower}}
-                                        </a>
-                                     </li>
+                                <li>
+                                    Telephone : 
+                                    <a href="tel:{{links.phone_number}}" target="_blank">
+                                        {{links.phone_number}}
+                                    </a>
+                                 </li>
 
-                                {% endfor %}
+                                <li>
+                                    Email : 
+                                    <a href="mailto:{{links.email|safe}}" target="_blank">
+                                        {{ links.email|safe}}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    Site web : 
+                                    <a href="{{links.website}}" target="_blank" style="cursor: pointer !important;">
+                                        {{links.website}}
+                                    </a>
+                                </li>
+
+                            
+
+                            
+
+                                <li>
+                                    Adresse
+
+                                    <address class="address">
+                                        <span>{{links.address|safe|capfirst}},</span>
+                                        <span> BP : {{links.post_box}}</span>
+                                    </address>
+
+                                </li>
+
+
+                          
                             </ul>
                         </div>
                         <!-- End Footer Single Item -->
@@ -38,50 +66,31 @@
                                 {% else %}
                                 <li><a href="{% url 'account:login' %}">Se connecter</a></li>
                                 {% endif %}
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                <!-- <li><a href="wishlist.html">Wishlist</a></li>
+                                <li><a href="privacy-policy.html">Privacy Policy</a></li> -->
                                 <li><a href="{% url 'about:faq' %}">Questions frequement posées</a></li>
-                                {% if request.user.is_authenticated %}
+                                <!-- {% if request.user.is_authenticated %}
                                     
                                 <li><a href="{% url 'account:history-product' %}">Historique</a></li>
 
-                                {% endif %}
+                                {% endif %} -->
 
                             </ul>
                         </div>
                         <!-- End Footer Single Item -->
                     </div>
 
-                    <div class="col-lg-3 col-sm-6 mb-6">
-                        <!-- Start Footer Single Item -->
-                        <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
-                            data-aos-delay="0">
-                            <h5 class="title">INFORMATION</h5>
-                            <ul class="footer-nav">
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li>
-                                    <a href="{% url 'contact:main' %}">Contact</a>
-                                </li>
-                                <li><a href="#">Returns</a></li>
-                            </ul>
-                        </div>
-                        <!-- End Footer Single Item -->
-                    </div>
-                    
                     <div class="col-lg-3 col-sm-6 mb-6">
                         <!-- Start Footer Single Item -->
                         <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
                             data-aos-delay="600">
                             <h5 class="title">A PROPOS DE NOUS</h5>
                             <div class="footer-about">
-                                <p>We are a team of designers and developers that create high quality Magento,
-                                    Prestashop, Opencart.</p>
+                                <p>
+                                    {{about.overview|safe|capfirst}}
+                                </p>
 
-                                <address class="address">
-                                    <span>Address: Your address goes here.</span>
-                                    <span>Email: demo@example.com</span>
-                                </address>
+                                
                             </div>
                         </div>
                         <!-- End Footer Single Item -->

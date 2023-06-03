@@ -52,7 +52,6 @@ class CartManager(models.Manager):
 class Cart(models.Model):
     user       = models.ForeignKey(User, verbose_name="client", on_delete=models.CASCADE, null=True, blank=True, editable=False)
     products   = models.ManyToManyField(Product, verbose_name='articles', blank=True)
-    subtotal   = models.DecimalField('total hors taxe', max_digits=100, decimal_places=2, default=0.00, validators=[MaxValueValidator(1000000000000),MinValueValidator(0)])
     total      = models.DecimalField('total ttc', max_digits=100, decimal_places=2, default=0.00, validators=[MaxValueValidator(1000000000000),MinValueValidator(0)])
     updated    = models.DateTimeField(auto_now=True, verbose_name='Modification')
     timestamp  = models.DateTimeField(auto_now_add=True, verbose_name='Creation')
@@ -98,10 +97,10 @@ def m2m_changed_pre_save_cart_receiver(sender, instance, action, *args, **kwargs
             
         instance.total = total
         
-        if instance.subtotal != total:
-            instance.subtotal = total
+        # if instance.subtotal != total:
+        #     instance.subtotal = total
             
-            instance.save()
+        instance.save()
              
         print(instance.total)
 
@@ -112,8 +111,8 @@ def m2m_changed_pre_save_cart_receiver(sender, instance, action, *args, **kwargs
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     
     TVA = 1.18
-    if instance.subtotal > 0:
-        instance.total = Decimal(instance.subtotal) 
+    if instance.total > 0:
+        instance.total = Decimal(instance.total) 
     else:
         instance.total = 0.00
     

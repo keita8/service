@@ -5,13 +5,14 @@
 {% url 'shop:main' as boutique  %}
 
 
+
 <div class="sidebar-single-widget">
     <h6 class="sidebar-title">CATEGORIE{{categories.count|pluralize}}</h6>
     <div class="sidebar-content">
         <ul class="sidebar-menu">
             <li>
                 <ul class="sidebar-menu-collapse">
-                    <!-- Start Single Menu Collapse List -->
+
                     <li>
                         <a {% if boutique in request.path %} class="active main-menu-link" style="color:#B19361;" {% endif %} href="{% url 'shop:main' %}">
                             Tous les articles
@@ -23,12 +24,12 @@
                     
 
                             <div class="accordion">
-                                <!-- <a href="/categorie/{{ node.slug }}/"  -->
+                               
                                 <a href="{% url 'products:categorie' node.id node.slug  %}"
                                     {% if not node.is_leaf_node %}
                                         class="accordion-title collapsed"
                                         data-bs-toggle="collapse"    
-                                        data-bs-target="#{{ node.title }}"
+                                        data-bs-target="#{{ node.slug }}"
                                         aria-expanded="false"
                                     {% endif %} 
                                     >  {{ node.title|capfirst }}
@@ -38,7 +39,7 @@
                                     {% endif %} 
 
                                 </a>
-                                <div id="{{ node.title }}" class="collapse">
+                                <div id="{{ node.slug }}" class="collapse">
                                     
                                     {% if not node.is_leaf_node %}
 
@@ -55,7 +56,7 @@
                             </div>
                         
 
-                    </li> <!-- End Single Menu Collapse List -->
+                    </li> 
 
                     {% endrecursetree %}
 
@@ -64,4 +65,4 @@
             
         </ul>
     </div>
-</div> 
+</div>  

@@ -92,6 +92,7 @@ TEMPLATES = [
                 "ecommerce.apps.social.context_processors.link",
                 "ecommerce.apps.blog.context_processors.blog_latest",
                 "ecommerce.apps.instagram.context_processors.instagramm",
+                "ecommerce.apps.about.context_processors.about",
             ],
         },
     },

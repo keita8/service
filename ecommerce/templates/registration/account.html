@@ -36,8 +36,8 @@
                     <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
                         <div class="tab-pane fade show active" id="dashboard">
                             <h4 style="text-transform: lowercase; ">{{ request.user|lower }} </h4>
-                            <p>À partir de votre compte, vous pouvez facilement verifier &amp; voir votre <a href="#orders" data-bs-toggle="tab">commande recente</a>, manage your <a href="#">shipping and billing addresses</a> and <a
-                                    href="#">Edit your password and account details.</a></p>
+                            <p>À partir de votre compte, vous pouvez facilement {% if request.user.is_staff %}votre <a href="{% url 'analytics:sale' %}">les données de vente</a>, {% endif %} gerer votre adresse <a href="#">de livraison</a> et<a
+                                    href="#">modifier le mot de passe de votre compte.</a></p>
                         </div>
                         <div class="tab-pane fade" id="orders">
 

@@ -5,6 +5,8 @@ def about(request):
     
     about = About.objects.all().first()
     
+    print(about)
+    
     template_name = 'layout/about.html'
     context = {
         'about': about

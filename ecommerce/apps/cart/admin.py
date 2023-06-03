@@ -37,7 +37,7 @@ class CartResource(resources.ModelResource):
 @admin.register(Cart)
 class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_classes = [CartResource]
-    list_display = ('id', 'total', 'subtotal', 'updated', 'timestamp')
+    list_display = ('id', 'total', 'updated', 'timestamp')
     list_display_links = ('id', 'total')
     list_filter = ('updated', 'timestamp')
     search_fields = ('id',  )

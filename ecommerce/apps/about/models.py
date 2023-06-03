@@ -25,10 +25,12 @@ def upload_about_path(instance, filename):
 
 
 class About(models.Model):
-    title = models.CharField(max_length = 150, verbose_name='Titre')
-    content = HTMLField()
-    image = models.ImageField(upload_to=upload_about_path, height_field=None, width_field=None, max_length=100)
-
+    title = HTMLField(default="À PROPOS D'IT SERVICES")
+    overview = HTMLField(help_text='brève description du service',  default="IT SERVICE SARL est un intégrateur système spécialisé dans le domaine réseaux et sécurité informatique. Immatricule au registre du commerce et du crédit immobilier sous la référence GC.KAL.2017.B.080 022")
+    # title = models.CharField(max_length = 150, verbose_name='Titre')
+    intervention = models.ManyToManyField("Intervention", blank=True)
+    content = HTMLField(blank=True)
+    reference = models.ManyToManyField("Reference", blank=True)
 
     class Meta:
         verbose_name ="A propos"
@@ -38,6 +40,43 @@ class About(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+class Intervention(models.Model):
+    name = models.CharField(max_length = 150, verbose_name='intervention', unique=True)
+    
+    class Meta:
+        verbose_name ="Domaine d'Intervention"
+        verbose_name_plural ="Domaines d'Interventions"
+
+    def __str__(self):
+        return self.name
+
+
+
+
+
+
+
+class Reference(models.Model):
+    name = models.CharField(max_length = 150, verbose_name='partenaire', unique=True, default='ref')
+    image = models.ImageField(upload_to=upload_about_path, height_field=None, width_field=None, max_length=100)
+    
+
+    class Meta:
+        verbose_name ="Nos partenaire"
+        verbose_name_plural ="Nos partenaires"
+
+    def __str__(self):
+        return f'{self.name}'
+
+    # def get_absolute_url(self):
+    #     return reverse("Reference_detail", kwargs={"pk": self.pk})
+
+
 
 
 
