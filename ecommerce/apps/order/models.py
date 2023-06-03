@@ -118,7 +118,6 @@ class Orders(models.Model):
     shipping_address        = models.ForeignKey(Adresse, on_delete=models.CASCADE, blank=True, null=True, verbose_name="adresse de livraison")
     cart                    = models.ForeignKey(Cart, on_delete=models.CASCADE, verbose_name='panier')
     status                  = models.CharField(max_length = 150, choices=ORDER_STATUS, default="created")
-    shipping_total          = models.DecimalField(max_digits=100, decimal_places=2, default=9.99, verbose_name="frais de livraison")
     total                   = models.DecimalField(max_digits=100, decimal_places=2, default=0.00, verbose_name="total")
     timestamp               = models.DateTimeField(verbose_name="date de creation", default=now)
     active                  = models.BooleanField(default=True)
@@ -140,8 +139,7 @@ class Orders(models.Model):
         
     def update_total(self):
         cart_total = self.cart.total
-        shipping_total = self.shipping_total
-        new_total = math.fsum([cart_total, shipping_total])
+        new_total = math.fsum([cart_total,0])
         formatted_total = format(new_total, '.2f')
         self.total = formatted_total
         self.save()

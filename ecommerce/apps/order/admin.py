@@ -10,14 +10,13 @@ class OrderResource(resources.ModelResource):
     order_id = Field(column_name="N° de commande")
     cart = Field(column_name="Panier")
     status = Field(column_name="Status")
-    shipping_total = Field(column_name="Frais de livraison")
     total = Field(column_name="Total")
     timestamp = Field(column_name="Date de creation")
 
     class Meta:
         model = Orders
-        fields = ("order_id", "cart", "status", "shipping_total", "total", "timestamp")
-        export_order =("order_id", "cart", "status", "shipping_total", "total", "timestamp")
+        fields = ("order_id", "cart", "status", "total", "timestamp")
+        export_order =("order_id", "cart", "status", "total", "timestamp")
 
     def dehydrate_order_id(self, obj):
         return obj.order_id
@@ -35,9 +34,6 @@ class OrderResource(resources.ModelResource):
         else:
             return "remboursée"
 
-    def dehydrate_shipping_total(self, obj):
-        return f"{obj.shipping_total} GNF"
-    
     
     def dehydrate_total(self, obj):
         return f"{obj.total} GNF"
@@ -115,7 +111,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('order_id', 'status')
     list_filter = ( 'status', )
     exclude = ('billing_address', )
-    readonly_fields = ('order_id','cart', 'total', 'timestamp', "shipping_total" )
+    readonly_fields = ('order_id','cart', 'total', 'timestamp', )
 
 
 
