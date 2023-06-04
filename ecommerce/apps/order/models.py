@@ -1,5 +1,7 @@
+import datetime
 from django.db import models
 import math
+from django.db.models import Count, Sum, Avg
 from django.db.models.query import QuerySet
 from django.urls import reverse
 from ecommerce.apps.cart.models import Cart
@@ -12,6 +14,7 @@ from django.conf import settings
 from decimal import Decimal
 from ecommerce.apps.billing.models import *
 from ecommerce.apps.products.models import Product
+from django.utils import timezone
 
 
 
@@ -34,10 +37,61 @@ class OrderManagerQuerySet(models.query.QuerySet):
     def recent(self):
         return self.order_by('-timestamp')
     
+    def get_sales_breakdown(self):
+        recent = self.recent().not_refunded()
+        recent_data = recent.totals_data()
+        recent_cart_data = recent.cart_data()
+        shipped = recent.not_refunded().by_status(status="shipped")
+        shipped_data = shipped.totals_data()
+        paid = recent.by_status(status="paid")
+        paid_data = paid.totals_data()
+        data = {
+            'recent': recent,
+            'recent_data': recent_data,
+            'recent_cart_data': recent_cart_data,
+            'shipped': shipped,
+            'shipped_data': shipped_data,
+            'paid':paid,
+            'paid_data':paid_data
+        }
+        
+        return data
+        
+  
+
     
+    def by_range(self, start_date, end_date=None):
+        if end_date is None:
+            return self.filter(updated__gte=start_date)
+        return self.filter(updated__gte=start_date).filter(updated__lte=end_date)
+    
+    
+    def by_date(self):
+        now = timezone.now() - datetime.timedelta(days=9)
+        return self.filter(updated__day__gte=now.day)
+    
+    
+    def by_week_range(self, weekend_ago=1, number_of_weeks=1):
+        if number_of_weeks > weekend_ago:
+            number_of_weeks = weekend_ago
+        days_ago_start = weekend_ago * 7
+        days_ago_end = days_ago_start  - (number_of_weeks * 7)
+        start_date = timezone.now() - datetime.timedelta(days=days_ago_start)
+        end_date = timezone.now() - datetime.timedelta(days=days_ago_end)
+        print(days_ago_start, days_ago_end)
+        return self.by_range(start_date=start_date, end_date=end_date)
+    
+
     def by_status(self, status="shipped"):
         return self.filter(status=status)
     
+    
+    def totals_data(self):
+        return self.aggregate(Sum('total'), Avg('total') )
+        
+    
+    def cart_data(self):
+        return self.aggregate(Sum('cart__products__price'),Avg('cart__products__price'), Count("cart__products"))
 
     
     def not_refunded(self):
@@ -81,6 +135,9 @@ class OrderManager(models.Manager):
     def not_created(self):
         return self.get_queryset().not_created()
     
+        
+    def by_date(self):
+        return self.get_queryset().by_date()
     
     
     def recent(self):
@@ -120,6 +177,7 @@ class Orders(models.Model):
     status                  = models.CharField(max_length = 150, choices=ORDER_STATUS, default="created")
     total                   = models.DecimalField(max_digits=100, decimal_places=2, default=0.00, verbose_name="total")
     timestamp               = models.DateTimeField(verbose_name="date de creation", default=now)
+    updated                 = models.DateTimeField("dernière modification", auto_now=True)
     active                  = models.BooleanField(default=True)
     
     class Meta:

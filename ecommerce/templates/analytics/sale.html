@@ -1,19 +1,25 @@
 {% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
 
 {% block title %} | Données de vente {% endblock title %}
 
 
 {% block content %}
 
+<!-- 
 
 <h1>Données de vente</h1>
 <p>
-    Nombre de panier {{ recent_orders_cart }}
+    Nombre de panier {{ recent_orders_cart_data }}
 </p>
+
+
+
 <div class="row">
-    <p>Recentes commandes {{recent_orders_total.total__sum}} </p>
+    <h1>Ventes du jour {{ today.recent_data.total__sum|intcomma}} GNF </h1>
     <div class="col">
-        {% for order in recent_orders %}
+        {% for order in today.recent %}
             <p>
                 {{order.order_id}}
 
@@ -32,7 +38,103 @@
         {% endfor %}
 
     </div>
+
+
+
 </div>
+    <ul>
+
+        <li>
+            {{order.order_id}}
+        </li>
+        <li>
+            {{order.total}}
+        </li>
+        <li>
+            {{order.timestamp}}
+        </li>
+        <br>
+
+    </ul>
+ -->
+
+
+<!-- 
+
+
+
+
+    
+    <br>
+
+    <p>Commande livrée  {{today.shipped_data.total__sum}} </p>
+    <ul>
+        {% for qs in today.shipped %}
+            <li>
+                {{qs.order_id}}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        Commande payée  {{ today.paid_data.total__sum}} <br> 
+        {% for qs in today.paid %}
+            {{qs.order_id}}
+            {{qs.get_status}}
+        {% endfor %}
+    </p>
+ -->
+
+<!-- 
+
+
+
+
+    <hr>
+    <br>
+    <br>
+
+
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="row">
+    <h1>Ventes de la semaine</h1>
+    <p>Recentes commandes {{this_week.recent_data.total__sum}} </p>
+    <div class="col">
+        {% for order in this_week.recent %}
+            <p>
+                {{order.order_id}}
+
+            </p>
+
+            <p>
+                {{order.total}}
+
+            </p>
+
+            <p>
+            {{order.timestamp}}
+
+            </p>
+        </li>
+        {% endfor %}
+
+    </div> -->
+<!-- </div>
     <ul>
 
         <li>
@@ -50,9 +152,9 @@
 
     <br>
 
-    <p>Commande livrée</p>
+    <p>Commande livrée  {{this_week.shipped_data.total__sum}} </p>
     <ul>
-        {% for qs in shipped_orders %}
+        {% for qs in this_week.shipped %}
             <li>
                 {{qs.order_id}}
             </li>
@@ -60,11 +162,201 @@
     </ul>
 
     <p>
-        Commande payée <br> 
-        {% for qs in paid_orders %}
+        Commande payée  {{ this_week.paid_data.total__sum}} <br> 
+        {% for qs in this_week.paid %}
             {{qs.order_id}}
             {{qs.get_status}}
         {% endfor %}
     </p>
 
+
+ -->
+
+
+
+
+    <hr>
+    <br>
+    <br>
+
+
+
+<!-- 
+<h1>Ventes des quatre dernières semaines</h1>
+<p>
+
+</p>
+<div class="row">
+    <p> commandes totales {{last_four_week.recent_data.total__sum}} </p> -->
+    <!-- <div class="col">
+        {% for order in last_four_week.recent|slice:":5" %}
+            <p>
+                {{order.order_id}}
+
+            </p>
+
+            <p>
+                {{order.total}}
+
+            </p>
+
+            <p>
+            {{order.timestamp}}
+
+            </p>
+        </li>
+        {% endfor %}
+
+    </div> -->
+<!-- </div> -->
+    <!-- <ul>
+
+        <li>
+            {{order.order_id}}
+        </li>
+        <li>
+            {{order.total}}
+        </li>
+        <li>
+            {{order.timestamp}}
+        </li>
+        <br>
+
+    </ul> -->
+
+    <!-- <br> -->
+
+    <!-- {% if last_four_week.shipped_data.total__sum %}
+    <p>Commande livrée  {{last_four_week.shipped_data.total__sum}} </p>
+    {% else %}
+    <p>Aucune commande livrée</p>
+    {% endif %}
+
+    <p>
+        Commande payée  {{ last_four_week.paid_data.total__sum}} <br> 
+
+    </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <hr>
+
+
+
+
+
+
+
+
+ -->
+
+
+<canvas id="thisWeekSales" width="400" height="400" style="display: flex; align-items:center; justify-content:center;"></canvas>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    // SALE DATA
+    
+    
+    $(document).ready(function(){
+        function renderChart(id, data, labels) {
+    
+        const ctx = $('#'+id)
+
+        console.log(ctx)
+      
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Vente journalière',
+              data: data,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        })
+            
+        }
+    
+    
+    
+    
+    
+    
+    
+        var url = "/analytics/sales/data/"
+        var method = "GET"
+        var data = {"type":"week"}
+    
+        $.ajax({
+            url:url,
+            method:method,
+            data:data,
+            success: function(responseData){
+                console.log(responseData)
+                renderChart("thisWeekSales", responseData.data, responseData.labels)
+            },
+            error: function(error){
+                console.log(error)
+                alert("Une erreur est survenue !!!")
+            }
+        })
+
+
+
+
+
+
+        var url2 = "/analytics/sales/data/"
+        var method2 = "GET"
+        var data2 = {"type":"4week"}
+    
+        $.ajax({
+            url:url2,
+            method:method2,
+            data:data2,
+            success: function(responseData){
+                console.log(responseData)
+                renderChart("fourWeekSales", responseData.data, responseData.labels)
+            },
+            error: function(error){
+                console.log(error)
+                alert("Une erreur est survenue !!!")
+            }
+        })
+    })
+    </script>
+   
+        
 {% endblock content %}
