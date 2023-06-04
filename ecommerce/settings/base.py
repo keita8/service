@@ -141,7 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "fr-FR"
 
-TIME_ZONE = "Africa/Casablanca"
+TIME_ZONE = "Africa/Conakry"
 
 USE_I18N = True
 

@@ -9,6 +9,7 @@ from django.contrib.auth import logout
 from django.db.models import *
 import datetime
 from django.utils import timezone
+import random
 
 
 class LogoutIfNotStaffMixin(AccessMixin):
@@ -42,12 +43,45 @@ class SaleAjaxView(View):
     def get(self, request, *args, **kwargs):
         data = {}
         if request.user.is_staff:
+            qs = Orders.objects.all().by_week_range(weekend_ago=5, number_of_weeks=5)
             if request.GET.get('type') == "week":
-                data['labels'] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-                data['data'] = [298, 139, 405, 592, 822, 640, 375]
+                
+                days = 7
+                start_date = timezone.now().today() - datetime.timedelta(days=days-1)
+                datetime_list = []
+                labels = []
+                salesItems = []
+                for x in range(0, days):
+                    new_time = start_date + datetime.timedelta(days=x)
+                    datetime_list.append(
+                        new_time
+                    )
+                    labels.append(
+                        new_time.strftime('%a')
+                    )
+                    
+                    salesItems.append(
+                        random.randint(3, 19291)
+                    )
+                    
+                    
+
+                # data['labels'] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+                data['labels'] = labels
+                data['data'] = salesItems
+                # data['data'] = [298, 139, 405, 592, 822, 640, 375]
+                
             if request.GET.get('type') == "4week":
-                data['labels'] = ["Semaine dernière", "Il ya 2 semaines", "Il ya 3 semaines", "Il ya un mois"]
-                data['data'] = [ 592, 822, 640, 375]
+                current = 4
+                data['labels'] = ["Il ya 4 semaines", "Il ya 3 semaines", "Il ya 2 semaines", "Cette semaine"]
+                data['data'] = []
+                for x in range(0, 4):
+                    new_qs = qs.by_week_range(weekend_ago=current, number_of_weeks=1)
+                    sales_total = new_qs.totals_data()['total__sum']
+                    if sales_total is None:
+                        sales_total = 0
+                    data['data'].append(sales_total)
+                    current -= 1
         return JsonResponse(data=data)
 
     

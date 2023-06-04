@@ -177,7 +177,7 @@ class Orders(models.Model):
     status                  = models.CharField(max_length = 150, choices=ORDER_STATUS, default="created")
     total                   = models.DecimalField(max_digits=100, decimal_places=2, default=0.00, verbose_name="total")
     timestamp               = models.DateTimeField(verbose_name="date de creation", default=now)
-    updated                 = models.DateTimeField("dernière modification", auto_now=True)
+    updated                 = models.DateTimeField("dernière modification", default=timezone.now)
     active                  = models.BooleanField(default=True)
     
     class Meta:
