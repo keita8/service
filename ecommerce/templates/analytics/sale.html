@@ -5,7 +5,116 @@
 {% block title %} | Données de vente {% endblock title %}
 
 
+
+
+{% block script %}
+
+<script>
+
+    // SALE DATA
+    
+    
+    $(document).ready(function(){
+        function renderChart(id, data, labels) {
+    
+        const ctx = $('#'+id)
+
+        console.log(ctx)
+      
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Vente journalière',
+              data: data,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        })
+            
+        }
+    
+    
+    
+    
+    
+    
+    
+       function getSalesData(id, type){
+            var url = "/analytics/sales/data/"
+            var method = "GET"
+            var data = {"type":type}
+
+                
+            $.ajax({
+                url:url,
+                method:method,
+                data:data,
+                success: function(responseData){
+
+                    renderChart(id, responseData.data, responseData.labels)
+                },
+                error: function(error){
+
+                    alert("Une erreur est survenue !!!")
+                }
+            })
+
+       }
+
+
+
+       var chartsToRender = $('.keita-render-chart')
+
+       $.each(chartsToRender, function(index, html){
+            var $this = $(this)
+            getSalesData($this.attr('id'), $this.attr('data-type'))
+       })
+
+
+
+
+
+
+
+        var url2 = "/analytics/sales/data/"
+        var method2 = "GET"
+        var data2 = {"type":"4week"}
+    
+        $.ajax({
+            url:url2,
+            method:method2,
+            data:data2,
+            success: function(responseData){
+                console.log(responseData)
+                renderChart("fourWeekSales", responseData.data, responseData.labels)
+            },
+            error: function(error){
+                console.log(error)
+                alert("Une erreur est survenue !!!")
+            }
+        })
+    })
+</script>
+   
+
+
+{% endblock script %}
+
+
+
+
 {% block content %}
+
+
 
 <!-- 
 
@@ -263,100 +372,19 @@
 
  -->
 
-
-<canvas id="thisWeekSales" width="400" height="400" style="display: flex; align-items:center; justify-content:center;"></canvas>
-
+ <canvas class="keita-render-chart" data-type="4week" id="fourWeekSales" width="400" height="400" style="display: flex; align-items:center; justify-content:center;"></canvas>
 
 
 
 
-
-
-
-
-
-
-<script>
-
-    // SALE DATA
-    
-    
-    $(document).ready(function(){
-        function renderChart(id, data, labels) {
-    
-        const ctx = $('#'+id)
-
-        console.log(ctx)
-      
-        new Chart(ctx, {
-          type: 'doughnut',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Vente journalière',
-              data: data,
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        })
-            
-        }
-    
-    
-    
-    
-    
-    
-    
-        var url = "/analytics/sales/data/"
-        var method = "GET"
-        var data = {"type":"week"}
-    
-        $.ajax({
-            url:url,
-            method:method,
-            data:data,
-            success: function(responseData){
-                console.log(responseData)
-                renderChart("thisWeekSales", responseData.data, responseData.labels)
-            },
-            error: function(error){
-                console.log(error)
-                alert("Une erreur est survenue !!!")
-            }
-        })
+<canvas class="keita-render-chart" data-type="week" id="thisWeekSales" width="400" height="400" style="display: flex; align-items:center; justify-content:center;"></canvas>
 
 
 
 
 
 
-        var url2 = "/analytics/sales/data/"
-        var method2 = "GET"
-        var data2 = {"type":"4week"}
-    
-        $.ajax({
-            url:url2,
-            method:method2,
-            data:data2,
-            success: function(responseData){
-                console.log(responseData)
-                renderChart("fourWeekSales", responseData.data, responseData.labels)
-            },
-            error: function(error){
-                console.log(error)
-                alert("Une erreur est survenue !!!")
-            }
-        })
-    })
-    </script>
-   
+
+
         
 {% endblock content %}
