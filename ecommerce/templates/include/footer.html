@@ -108,13 +108,27 @@
                         <div class="footer-social" data-aos="fade-up" data-aos-delay="0">
                             <h4 class="title">SUIVEZ-NOUS SUR</h4>
                             <ul class="footer-social-link">
+                                {% if links.facebook %}
+                                    
                                 <li>
                                     <a href="{{links.facebook}}" target="_blank">
                                     <i class="fa fa-facebook"></i>
                                     </a>
                                 </li>
+                                {% endif %}
+
+                                {% if links.twitter %}
+                                    
                                 <li><a href="{{links.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+
+                                {% endif %}
+
+                                {% if links.instagram %}
+                                    
                                 <li><a href="{{links.instagram}}" target="_blank"><i class="fa fa-instagram"></i></a></li>
+
+                                {% endif %}
+
                             </ul>
                         </div>
                     </div>
