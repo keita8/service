@@ -64,6 +64,7 @@ class Intervention(models.Model):
 class Reference(models.Model):
     name = models.CharField(max_length = 150, verbose_name='partenaire', unique=True, default='ref')
     image = models.ImageField(upload_to=upload_about_path, height_field=None, width_field=None, max_length=100)
+    url  = models.URLField(max_length = 200)
     
 
     class Meta:
