@@ -1,5 +1,7 @@
 import datetime
+from datetime import datetime
 from django.db import models
+from datetime import timedelta
 import math
 from django.db.models import Count, Sum, Avg
 from django.db.models.query import QuerySet
@@ -76,8 +78,8 @@ class OrderManagerQuerySet(models.query.QuerySet):
             number_of_weeks = weekend_ago
         days_ago_start = weekend_ago * 7
         days_ago_end = days_ago_start  - (number_of_weeks * 7)
-        start_date = timezone.now() - datetime.timedelta(days=days_ago_start)
-        end_date = timezone.now() - datetime.timedelta(days=days_ago_end)
+        start_date = timezone.now() - timedelta(days=days_ago_start)
+        end_date = timezone.now() - timedelta(days=days_ago_end)
         print(days_ago_start, days_ago_end)
         return self.by_range(start_date=start_date, end_date=end_date)
     
@@ -177,7 +179,7 @@ class Orders(models.Model):
     status                  = models.CharField(max_length = 150, choices=ORDER_STATUS, default="created")
     total                   = models.DecimalField(max_digits=100, decimal_places=2, default=0.00, verbose_name="total")
     timestamp               = models.DateTimeField(verbose_name="date de creation", default=now)
-    updated                 = models.DateTimeField("dernière modification", default=timezone.now)
+    updated                 = models.DateTimeField("dernière modification", auto_now=True)
     active                  = models.BooleanField(default=True)
     
     class Meta:

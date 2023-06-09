@@ -19,29 +19,24 @@
                         <div class="contact-details">
                             <!-- Start Contact Details Single Item -->
                             <div class="contact-details-single-item">
-                                <div class="contact-details-icon">
-                                    <i class="fa fa-phone"></i>
-                                </div>
+                                
                                 <div class="contact-details-content contact-phone">
                                     <a href="tel:{{ links.phone_number }}">{{ links.phone_number }}</a>
                                 </div>
                             </div> <!-- End Contact Details Single Item -->
                             <!-- Start Contact Details Single Item -->
                             <div class="contact-details-single-item">
-                                <div class="contact-details-icon">
-                                    <i class="fa fa-envelope"></i>
-                                </div>
+                                
                                 <div class="contact-details-content contact-phone">
                                     <a href="mailto:{{ links.email|safe|lower }}" target="_blank">{{ links.email|safe|lower }}</a>
                                 </div>
                             </div> <!-- End Contact Details Single Item -->
                             <!-- Start Contact Details Single Item -->
                             <div class="contact-details-single-item">
-                                <!-- <div class="contact-details-icon">
-                                    <i class="fa fa-map-marker"></i>
-                                </div> -->
+                                
                                 <div class="contact-details-content contact-phone">
-                                    <span>{{ links.address|safe|capfirst }}</span>
+                                    <span>{{ links.address|safe|capfirst }},&nbsp; {{links.post_box}} </span>
+                                    
                                 </div>
                             </div> <!-- End Contact Details Single Item -->
                         </div>

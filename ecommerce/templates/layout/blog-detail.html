@@ -23,8 +23,7 @@
                             <img class="img-fluid" src="{{ blog_detail.cover.url }}" alt="{{ blog_detail.title|safe|capfirst }}">
                         </div>
                         <ul class="post-meta" data-aos="fade-up" data-aos-delay="200">
-                            <li>PUBLIÉ PAR : <a class="author">{{blog_detail.author|safe|capfirst}} </a></li>
-                            <li><a class="date">{{ blog_detail.created_on|date:"d/m/Y"}} </a></li>
+                            <>PUBLIÉ PAR : <a class="author">{{blog_detail.author|safe|capfirst}} </a> <a class="date">{{ blog_detail.created_on|date:"d/m/Y"}} </a></li>
                             
                         </ul>
 
@@ -36,14 +35,7 @@
                                 {{ blog_detail.content|safe|capfirst }}
                             </p>
                         </div>
-                        <div class="para-tags" data-aos="fade-up" data-aos-delay="0">
-                            <span>Tags: </span>
-                            <ul>
-                                <li><a href="#">fashion</a></li>
-                                <li><a href="#">t-shirt</a></li>
-                                <li><a href="#">white</a></li>
-                            </ul>
-                        </div>
+                        
                     </div> <!-- End Blog Single Content Area -->
                     
                 </div>

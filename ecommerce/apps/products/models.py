@@ -135,7 +135,7 @@ class Category(MPTTModel):
     cat_cku   = models.UUIDField(editable=False, unique=True, default=uuid.uuid4)
     parent    = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     title     = models.CharField(max_length = 150, unique=True, verbose_name='categorie')
-    slug      = models.SlugField(max_length=150, unique=True, null=True, blank=True, editable=False)
+    slug      = models.SlugField(max_length=150, unique=True, null=True, blank=True)
     active    = models.BooleanField(default=False)
     image     = models.ImageField(upload_to=upload_image_path, blank=True, null=True, height_field=None, width_field=None, max_length=None)
     timestamp = models.DateTimeField("date de creation", auto_now_add=True)
@@ -146,7 +146,7 @@ class Category(MPTTModel):
     
     def save(self, *args, **kwargs) -> None:
         if not self.slug:
-            self.slug = slugify(self.cat_cku)
+            self.slug = slugify(self.title)
         return super(Category, self).save(*args, **kwargs)
 
     

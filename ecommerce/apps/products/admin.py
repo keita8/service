@@ -68,10 +68,12 @@ class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
 class CategoryAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "title"
     list_display = ('tree_actions', 'indented_title',
-                    'related_products_count', 'related_products_cumulative_count', 'active')
-    list_display_links = ('indented_title',)
+                    'related_products_count', 'related_products_cumulative_count','slug', 'active')
+    list_display_links = ('indented_title', 'slug')
+    prepopulated_fields = {'slug': ('title', )}
     search_fields = ('active', )
     list_editable = ('active', )
+
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

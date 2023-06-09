@@ -60,8 +60,10 @@ class SaleAjaxView(View):
                         new_time.strftime('%a')
                     )
                     
+                    new_qs = qs.filter(updated__day=new_time.day, updated__month=new_time.month)
+                    day_total = new_qs.totals_data()['total__sum'] or 0
                     salesItems.append(
-                        random.randint(3, 19291)
+                        day_total
                     )
                     
                     
@@ -72,14 +74,12 @@ class SaleAjaxView(View):
                 # data['data'] = [298, 139, 405, 592, 822, 640, 375]
                 
             if request.GET.get('type') == "4week":
-                current = 4
-                data['labels'] = ["Il ya 4 semaines", "Il ya 3 semaines", "Il ya 2 semaines", "Cette semaine"]
+                current = 5
+                data['labels'] = ["Il ya 4 semaines", "Il ya 3 semaines", "Il ya 2 semaines", "Semaine dernière", "Cette semaine"]
                 data['data'] = []
-                for x in range(0, 4):
+                for x in range(0, 5):
                     new_qs = qs.by_week_range(weekend_ago=current, number_of_weeks=1)
-                    sales_total = new_qs.totals_data()['total__sum']
-                    if sales_total is None:
-                        sales_total = 0
+                    sales_total = new_qs.totals_data()['total__sum'] or 0
                     data['data'].append(sales_total)
                     current -= 1
         return JsonResponse(data=data)
@@ -114,7 +114,10 @@ class SaleView( PermissionRequiredMixin, LogoutIfNotStaffMixin, LoginRequiredMix
         context = super(SaleView, self).get_context_data(*args, **kwargs)
 
         qs = Orders.objects.all().by_week_range(weekend_ago=10, number_of_weeks=10)
-        context['today'] = qs.by_range(start_date=timezone.now().date()).get_sales_breakdown()
+        start_date = timezone.now().date() - datetime.timedelta(hours=24)
+        end_date = timezone.now().date() + datetime.timedelta(hours=12)
+        today_data = qs.by_range(start_date=start_date, end_date=end_date).get_sales_breakdown()
+        context['today'] = today_data
         context['this_week'] = qs.by_week_range(weekend_ago=1, number_of_weeks=1).get_sales_breakdown()
         context['last_four_week'] = qs.by_week_range(weekend_ago=5, number_of_weeks=4).get_sales_breakdown()
         

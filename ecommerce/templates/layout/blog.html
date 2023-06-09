@@ -34,8 +34,7 @@
                                         <div class="col-xl-7 col-md-6">
                                             <div class="content">
                                                 <ul class="post-meta">
-                                                    <li>PUBLIÉ PAR : <a class="author">{{post.author|safe|capfirst}}</a></li>
-                                                    <li> <a class="date">{{ post.created_on|date:"d/m/Y" }}</a></li>
+                                                    <li>PUBLIÉ PAR : <a class="author">{{post.author|safe|capfirst}} <a class="date">{{ post.created_on|date:"d/m/Y" }}</a></li>
                                                 </ul>
                                                 <h6 class="title" >
                                                     <a href="{{ post.get_absolute_url }}" style="text-transform: lowercase;"> 
