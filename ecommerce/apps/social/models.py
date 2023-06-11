@@ -8,7 +8,7 @@ class Social(models.Model):
     whatsapp  = models.URLField("WhatsApp", max_length=300, blank=True, null=True)
     phone_number = PhoneNumberField(blank=True, verbose_name="Téléphone", default="+224611111183")
     email     = models.EmailField(max_length=254, default='contact@itservices.com')
-    address   = models.TextField(verbose_name="adresse", default="Taouya Petit carrefour petit lac commune de Ratoma, Conakry République de Guinée")
+    address   = models.TextField(verbose_name="adresse", default="Taouya Petit Lac commune de Ratoma, Conakry République de Guinée")
     website   = models.URLField(verbose_name="site web", max_length=200, default='www.itservicesgn.com')
     post_box  = models.IntegerField(verbose_name="boite postale", default='403')
     
