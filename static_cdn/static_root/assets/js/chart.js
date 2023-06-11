@@ -88,7 +88,6 @@
                 renderChart("fourWeekSales", responseData.data, responseData.labels)
             },
             error: function(error){
-                console.log(error)
                 alert("Une erreur est survenue !!!")
             }
         })
