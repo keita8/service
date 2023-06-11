@@ -183,7 +183,6 @@ class Product(models.Model):
             MinValueValidator(100)
         ]
     )
-    specification = models.ForeignKey('Specification', on_delete=models.CASCADE, blank=True, null=True)
     image       = models.ManyToManyField('Upload')
     is_active   = models.BooleanField(default=True, verbose_name='Disponible ?')
     in_stock    = models.BooleanField("En stock ?", default=True)
@@ -358,30 +357,30 @@ class HeroSection(models.Model):
 
 
 
-class Content(models.Model):
-    name = models.CharField(max_length = 150, verbose_name='contenu', unique=True)
+# class Content(models.Model):
+#     name = models.CharField(max_length = 150, verbose_name='contenu', unique=True)
     
 
-    class Meta:
-        verbose_name = "Contenu"
-        verbose_name_plural = "Contenus"
+#     class Meta:
+#         verbose_name = "Contenu"
+#         verbose_name_plural = "Contenus"
 
-    def __str__(self):
-        return self.name
-
-
+#     def __str__(self):
+#         return self.name
 
 
 
-class Specification(models.Model):
-    name = models.CharField(max_length = 150, unique=True)
-    content = models.ManyToManyField(Content, verbose_name="valeur")
 
 
-    class Meta:
-        verbose_name = "Specification"
-        verbose_name_plural = "Specifications"
+# class Specification(models.Model):
+#     name = models.CharField(max_length = 150, unique=True)
+#     content = models.ManyToManyField(Content, verbose_name="valeur")
 
-    def __str__(self):
-        return self.name
+
+#     class Meta:
+#         verbose_name = "Specification"
+#         verbose_name_plural = "Specifications"
+
+#     def __str__(self):
+#         return self.name
 
