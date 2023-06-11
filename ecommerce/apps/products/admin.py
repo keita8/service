@@ -53,13 +53,13 @@ class ProductResource(resources.ModelResource):
 @admin.register(Product)
 class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_classes = [ProductResource]
-    inlines = [ProductFileInline]
+    # inlines = [ProductFileInline]
     list_display = ('reference', 'title', 'price', 'category', 'is_active', 'timestamp')
     list_display_links = ('reference', 'title')
     list_filter = ('is_active', )
     search_fields = ('title', )
     list_editable = ('is_active', 'category')
-    
+    exclude = ('is_digit', 'featured')
     
 
 
