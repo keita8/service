@@ -54,7 +54,7 @@ class ProductResource(resources.ModelResource):
 class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_classes = [ProductResource]
     # inlines = [ProductFileInline]
-    list_display = ('reference', 'title', 'price', 'category', 'is_active', 'timestamp')
+    list_display = ('reference', 'title', 'price', 'category', 'is_active')
     list_display_links = ('reference', 'title')
     list_filter = ('is_active', )
     search_fields = ('title', )
