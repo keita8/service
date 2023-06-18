@@ -10,7 +10,7 @@ from decouple import config
 import dj_database_url
 
 import os
-
+from decouple import config
 
 
 
@@ -25,8 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY ="django-insecure-fz(terk0ud&3tuf=a^=-h3yl+3)8&3c(-$4_--h&93vcgva2^0"
 
+# SECRET_KEY = config('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default="False")
+DEBUG = config("DEBUG", default="False", cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
